@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 export default function Explore() {
   return (
@@ -12,5 +12,5 @@ export default function Explore() {
         </li>
       </ul>
     </>
-  )
+  );
 }
