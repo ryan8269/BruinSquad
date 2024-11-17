@@ -4,7 +4,7 @@
   "description": "Introducing WeDate, a cutting-edge app designed to revolutionize how you connect, collaborate, and create. WeDate leverages the latest in AI-driven personalization, intuitive design, and seamless connectivity to bring a fully immersive experience right to your fingertips. Whether you’re looking to streamline your work, stay updated with friends, or track your wellness journey, WeDate adapts to your unique needs, learning from your habits to offer smarter insights and tailor-made suggestions.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon backend/server.js"
+    "dev": "concurrently \"nodemon backend/server.js\" \"ngrok http --url=shining-nicely-oarfish.ngrok-free.app 4000\""
   },
   "type": "module",
   "keywords": [],
@@ -13,9 +13,11 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "mongoose": "^8.8.1"
+    "mongoose": "^8.8.1",
+    "svix": "^1.40.0"
   },
   "devDependencies": {
+    "concurrently": "^9.1.0",
     "nodemon": "^3.1.7"
   }
 }
