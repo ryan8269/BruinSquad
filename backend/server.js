@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import activityRoutes from './routes/activity.route.js';
+import userRoutes from './routes/user.route.js';
 import User from './models/user.model.js';
 import { Webhook } from 'svix';
 import bodyParser from 'body-parser';
@@ -12,7 +13,8 @@ const app = express();
 
 // Middleware for regular routes
 app.use(express.json());
-app.use("/api/activity", activityRoutes);
+app.use("/api/activity", activityRoutes); 
+app.use("/api/users", userRoutes);
 
 // Webhook endpoint
 app.post(
@@ -86,17 +88,10 @@ app.post(
         const newUser = new User({
           name: `${eventData.first_name || ''} ${eventData.last_name || ''}`.trim(),
           clerkId: eventData.id,
-          generalInfo: {
-            age: 0,
-            major: "",
-            gender: eventData.gender || "Other",
-            sexualOrientation: "Other",
-            race: ""
-          },
-          isMatched: false,
-          wantsMatch: true,
           email: eventData.email_addresses?.[0]?.email_address || '',
           profileImage: eventData.profile_image_url || '',
+          isMatched: false,
+          wantsMatch: true,
         });
 
         await newUser.save();
