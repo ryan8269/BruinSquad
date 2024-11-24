@@ -1,11 +1,17 @@
 'use client';
-'use client';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { HeartIcon, UsersIcon, UserCircleIcon, HomeIcon, MessageCircleIcon, SettingsIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleProfileClick = () => {
+    router.push('/profile');
+  };
+
   return (
     <div className="min-h-screen flex">
       {/* Side Navigation */}
@@ -58,7 +64,11 @@ export default function Home() {
               <HeartIcon className="h-4 w-4" />
               Match
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={handleProfileClick}
+            >
               <UserCircleIcon className="h-4 w-4" />
               Profile
             </Button>
