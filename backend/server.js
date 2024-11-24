@@ -1,3 +1,4 @@
+import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import activityRoutes from './routes/activity.route.js';
@@ -5,7 +6,6 @@ import userRoutes from './routes/user.route.js';
 import User from './models/user.model.js';
 import { Webhook } from 'svix';
 import bodyParser from 'body-parser';
-import  express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { server1 } from 'svix/dist/openapi/servers.js';
@@ -164,7 +164,7 @@ io.on("connection", (socket) => {
   })
 });
 
-httpServer.listen(3001, () => {
+httpServer.listen(3001, () => { //FIXME
   console.log("SERVER RUNNING")
 });
 

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { io, Socket } from "socket.io-client";
 import { useEffect, useState } from "react";
 
-const socket: Socket = io("http://localhost:3001");
+const socket: Socket = io("http://localhost:3001"); //FIXME
 
 export default function Home() {
     const [message,setMessage] = useState<String>("")
