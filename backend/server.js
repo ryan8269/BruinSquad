@@ -1,10 +1,13 @@
-import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import activityRoutes from './routes/activity.route.js';
 import User from './models/user.model.js';
 import { Webhook } from 'svix';
 import bodyParser from 'body-parser';
+import  express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { server1 } from 'svix/dist/openapi/servers.js';
 
 dotenv.config();
 
@@ -144,6 +147,30 @@ app.listen(PORT, async () => {
     console.error('Failed to start server:', error);
     process.exit(1);
   }
+});
+
+
+//SOCKET.IO
+
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET","POST"]
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(socket.id); 
+
+  socket.on("send_message", (data) =>{
+    socket.broadcast.emit("receive_message", data)
+  })
+});
+
+httpServer.listen(3001, () => {
+  console.log("SERVER RUNNING")
 });
 
 export default app;
