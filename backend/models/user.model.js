@@ -29,31 +29,6 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true, // assuming they want to be matched when they sign up
     },
-    // General Information
-    generalInfo: {
-      age: {
-        type: Number,
-        required: true,
-      },
-      major: {
-        type: String,
-        required: false,
-      },
-      gender: {
-        type: String,
-        required: true,
-        enum: ["Male", "Female", "Non-binary", "Other"],
-      },
-      sexualOrientation: {
-        type: String,
-        required: true,
-        enum: ["Straight", "Gay", "Lesbian", "Bisexual", "Other"],
-      },
-      race: {
-        type: String,
-        required: false,
-      },
-    },
     // Sports as boolean flags
     sports: {
       basketball: {
@@ -95,89 +70,6 @@ const userSchema = new mongoose.Schema(
       none: {
         type: Boolean,
         default: true,
-      },
-    },
-    // Entertainment preferences
-    entertainment: {
-      movies: {
-        romance: {
-          type: Boolean,
-          default: false,
-        },
-        sciFi: {
-          type: Boolean,
-          default: false,
-        },
-        comedy: {
-          type: Boolean,
-          default: false,
-        },
-        horror: {
-          type: Boolean,
-          default: false,
-        },
-        action: {
-          type: Boolean,
-          default: false,
-        },
-        none: {
-          type: Boolean,
-          default: true,
-        },
-      },
-    },
-    // Music preferences
-    music: {
-      hipHop: {
-        type: Boolean,
-        default: false,
-      },
-      rock: {
-        type: Boolean,
-        default: false,
-      },
-      pop: {
-        type: Boolean,
-        default: false,
-      },
-      metal: {
-        type: Boolean,
-        default: false,
-      },
-      country: {
-        type: Boolean,
-        default: false,
-      },
-      kpop: {
-        type: Boolean,
-        default: false,
-      },
-      none: {
-        type: Boolean,
-        default: true,
-      },
-    },
-    // Food preferences
-    food: {
-      italian: {
-        type: Boolean,
-        default: false,
-      },
-      japanese: {
-        type: Boolean,
-        default: false,
-      },
-      chinese: {
-        type: Boolean,
-        default: false,
-      },
-      korean: {
-        type: Boolean,
-        default: false,
-      },
-      american: {
-        type: Boolean,
-        default: false,
       },
     },
   },

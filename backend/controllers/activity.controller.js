@@ -10,7 +10,7 @@ export const getActivities = async (req, res) => {
     }
 }
 
-export const createActivity = async (req,res)=> {
+export const createActivity = async (req,res) => {
     const activity = req.body;
     if (!activity.name || !activity.type || !activity.image) {
         return res.status(400).send("Missing required fields")
@@ -26,8 +26,9 @@ export const createActivity = async (req,res)=> {
 }
 
 export const updateActivity = async (req, res) => {
-    const {id} = req.params
-    const activity = req.body
+    const {id} = req.params //brackets it will look to see what variable has the same name
+    const activity = req.body //the actual acitivity name, type, image
+    //activity.name
     try {
         const updated = await Activity.findByIdAndUpdate(id, activity, {new: true})
         if (!updated) {
