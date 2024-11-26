@@ -1,22 +1,64 @@
+// Option 1: Single File (models/activity.model.js)
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-const activitySchema = new mongoose.Schema({
-    name:{
+// Message Schema
+// Modified chatMessageSchema
+const chatMessageSchema = new Schema({
+    userId: {
+        type: String, // Changed from ObjectId to String for Clerk IDs
+        required: true
+    },
+    username: {
         type: String,
         required: true
     },
-    type:{
+    message: {
         type: String,
         required: true
     },
-    image:{
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+// Location Schema
+const locationSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    imageUrl: {
         type: String,
         required: true
     }
+});
+
+// Activity Schema
+const activitySchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    chatMessages: [chatMessageSchema],
+    locations: [locationSchema]
 }, {
     timestamps: true
 });
 
 const Activity = mongoose.model('Activity', activitySchema);
-
 export default Activity;

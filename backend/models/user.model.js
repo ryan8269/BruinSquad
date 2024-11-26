@@ -3,10 +3,9 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
     // Add to your user schema
-    clerkId: {
+    _id: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -20,14 +19,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-    },
-    isMatched: {
-      type: Boolean,
-      default: false, // starts as unmatched
-    },
-    wantsMatch: {
-      type: Boolean,
-      default: true, // assuming they want to be matched when they sign up
     },
     // Sports as boolean flags
     sports: {
@@ -75,6 +66,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    _id: false,
   }
 );
 
