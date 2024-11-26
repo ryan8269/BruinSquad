@@ -32,6 +32,14 @@ interface MongoUser {
     }
 }
 
+// Interface for messages as they come from the database
+interface DatabaseMessage {
+    userId: string;
+    username: string;
+    message: string;
+    timestamp: Date;
+}
+
 interface ChatMessage {
     userId: string;
     user: string;
@@ -44,33 +52,39 @@ interface SportChatLayoutProps {
     mongoUser: MongoUser;
 }
 
+interface MessagesByRoom {
+    [room: string]: Array<ChatMessage>;
+}
+
+interface ActiveUsers {
+    [room: string]: string[];
+}
+
+const SPORTS = [
+    'basketball', 'running', 'tennis', 'football', 
+    'volleyball', 'badminton', 'swimming', 'yoga', 'gym'
+] as const;
+
+type Sport = typeof SPORTS[number];
+
 export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
-    if (!mongoUser || !mongoUser.data) {
-        return <div>Loading user data...</div>;
-    }
     const [activeRoom, setActiveRoom] = useState<string | null>(null);
-    const [messages, setMessages] = useState<{
-        [room: string]: Array<ChatMessage>;
-    }>({});
-    const [message, setMessage] = useState("");
-    const [activeUsers, setActiveUsers] = useState<{[room: string]: string[]}>({});
+    const [messages, setMessages] = useState<MessagesByRoom>({});
+    const [message, setMessage] = useState<string>("");
+    const [activeUsers, setActiveUsers] = useState<ActiveUsers>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const SPORTS = [
-        'basketball', 'running', 'tennis', 'football', 
-        'volleyball', 'badminton', 'swimming', 'yoga', 'gym'
-    ];
 
-    // Fetch messages for a room
-    const fetchMessages = async (room: string) => {
+
+    const fetchMessages = async (room: string): Promise<void> => {
         try {
             console.log('Fetching messages for room:', room);
             const response = await fetch(`http://localhost:4000/api/chat/${room}`);
             if (!response.ok) throw new Error('Failed to fetch messages');
             const data = await response.json();
             
-            // Convert messages to our format
-            const formattedMessages = data.chatMessages.map((msg: any) => ({
+            // Convert messages using the DatabaseMessage interface
+            const formattedMessages: ChatMessage[] = data.chatMessages.map((msg: DatabaseMessage) => ({
                 userId: msg.userId,
                 user: msg.username,
                 message: msg.message,
@@ -102,7 +116,7 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
         }
 
         // Listen for new messages
-        socket.on("chat_message", (data) => {
+        const handleChatMessage = (data: ChatMessage & { room: string }) => {
             setMessages(prev => ({
                 ...prev,
                 [data.room]: [...(prev[data.room] || []), {
@@ -113,26 +127,29 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
                     timestamp: new Date()
                 }]
             }));
-        });
+        };
 
         // Listen for active users updates
-        socket.on("active_users", (users) => {
+        const handleActiveUsers = (users: ActiveUsers) => {
             setActiveUsers(users);
-        });
+        };
+
+        socket.on("chat_message", handleChatMessage);
+        socket.on("active_users", handleActiveUsers);
 
         return () => {
             if (activeRoom) {
                 socket.emit("leave_room", activeRoom);
             }
-            socket.off("chat_message");
-            socket.off("active_users");
+            socket.off("chat_message", handleChatMessage);
+            socket.off("active_users", handleActiveUsers);
         };
     }, [activeRoom, mongoUser.data.name, mongoUser.data._id]);
 
-    const sendMessage = async () => {
+    const sendMessage = async (): Promise<void> => {
         if (message.trim() && activeRoom) {
             const currentTime = new Date();
-            const messageData = {
+            const messageData: ChatMessage & { room: string } = {
                 user: mongoUser.data.name,
                 userId: mongoUser.data._id,
                 message: message.trim(),
@@ -172,24 +189,33 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
         }
     };
 
+    const renderSportButton = (sport: Sport) => {
+        if (mongoUser.data.sports[sport]) {
+            return (
+                <button
+                    key={sport}
+                    onClick={() => setActiveRoom(sport)}
+                    className={`w-full p-2 text-left rounded transition-colors
+                        ${activeRoom === sport 
+                            ? 'bg-blue-500 text-white' 
+                            : 'bg-gray-100 hover:bg-gray-200'}`}
+                >
+                    {sport.charAt(0).toUpperCase() + sport.slice(1)}
+                </button>
+            );
+        }
+        return null;
+    };
+
+    if (!mongoUser || !mongoUser.data) {
+        return <div>Loading user data...</div>;
+    }
+
     return (
         <div className="flex h-[600px] gap-4 p-4">
             {/* Sports sidebar */}
             <div className="w-48 space-y-2">
-                {SPORTS.map((sport) => (
-                    mongoUser.data.sports[sport] && (
-                        <button
-                            key={sport}
-                            onClick={() => setActiveRoom(sport)}
-                            className={`w-full p-2 text-left rounded transition-colors
-                                ${activeRoom === sport 
-                                    ? 'bg-blue-500 text-white' 
-                                    : 'bg-gray-100 hover:bg-gray-200'}`}
-                        >
-                            {sport.charAt(0).toUpperCase() + sport.slice(1)}
-                        </button>
-                    )
-                ))}
+                {SPORTS.map((sport) => renderSportButton(sport))}
             </div>
 
             {/* Chat area */}
@@ -216,20 +242,20 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
                                 No messages yet. Start the conversation!
                             </div>
                         ) : (
-                            messages[activeRoom]?.map((msg, index) => (
+                            messages[activeRoom]?.map((message: ChatMessage, index: number) => (
                                 <div 
                                     key={index}
-                                    className={`${msg.userId === mongoUser.data._id ? 'ml-auto' : ''} 
+                                    className={`${message.userId === mongoUser.data._id ? 'ml-auto' : ''} 
                                               max-w-[70%] break-words`}
                                 >
                                     <div className={`rounded-lg p-2 ${
-                                        msg.userId === mongoUser.data._id 
+                                        message.userId === mongoUser.data._id 
                                             ? 'bg-blue-500 text-white ml-auto' 
                                             : 'bg-gray-100'
                                     }`}>
-                                        <div className="text-sm font-bold">{msg.user}</div>
-                                        <div>{msg.message}</div>
-                                        <div className="text-xs opacity-75">{msg.time}</div>
+                                        <div className="text-sm font-bold">{message.user}</div>
+                                        <div>{message.message}</div>
+                                        <div className="text-xs opacity-75">{message.time}</div>
                                     </div>
                                 </div>
                             ))
@@ -242,8 +268,10 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
                             <input
                                 className="flex-1 p-2 border rounded"
                                 value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+                                    setMessage(e.target.value)}
+                                onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => 
+                                    e.key === 'Enter' && sendMessage()}
                                 placeholder="Type a message..."
                             />
                             <button 

@@ -8,7 +8,7 @@ export default async function Page() {
     
     async function getMongoUser() {
         try {
-            const response = await fetch(`http://localhost:4000/api/users/${user.id}`, {
+            const response = await fetch(`http://localhost:4000/api/users/${user?.id}`, {
                 cache: 'no-store'
             });
             
