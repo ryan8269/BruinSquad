@@ -9,6 +9,7 @@ import bodyParser from 'body-parser';
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { server1 } from 'svix/dist/openapi/servers.js';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -25,11 +26,11 @@ app.post(
   bodyParser.raw({ type: 'application/json' }),
   async (req, res) => {
     try {
-      console.log('Webhook received');
+      // console.log('Webhook received');
       
-      // Debug incoming data
-      console.log('Headers:', req.headers);
-      console.log('Raw body:', req.body);
+      // // Debug incoming data
+      // console.log('Headers:', req.headers);
+      // console.log('Raw body:', req.body);
       
       const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
       if (!WEBHOOK_SECRET) {
@@ -38,7 +39,7 @@ app.post(
       }
 
       // Debug webhook secret (careful with logging in production)
-      console.log('Secret length:', WEBHOOK_SECRET.length);
+      // console.log('Secret length:', WEBHOOK_SECRET.length);
       
       // Get headers
       const svix_id = req.headers['svix-id'];
@@ -46,11 +47,11 @@ app.post(
       const svix_signature = req.headers['svix-signature'];
 
       // Debug headers
-      console.log('Svix Headers:', {
-        'svix-id': svix_id,
-        'svix-timestamp': svix_timestamp,
-        'svix-signature': svix_signature?.slice(0, 10) + '...' // Only log part of signature
-      });
+      // console.log('Svix Headers:', {
+      //   'svix-id': svix_id,
+      //   'svix-timestamp': svix_timestamp,
+      //   'svix-signature': svix_signature?.slice(0, 10) + '...' // Only log part of signature
+      // });
 
       if (!svix_id || !svix_timestamp || !svix_signature) {
         console.error('Missing required headers');
@@ -67,12 +68,12 @@ app.post(
         payload = JSON.stringify(req.body);
       }
       
-      console.log('Parsed payload:', payload.slice(0, 100) + '...'); // Log first 100 chars
+      // console.log('Parsed payload:', payload.slice(0, 100) + '...'); // Log first 100 chars
 
       try {
         // Create webhook instance with more detailed error handling
         const wh = new Webhook(WEBHOOK_SECRET);
-        console.log('Webhook instance created');
+        // console.log('Webhook instance created');
 
         // Verify the webhook
         const evt = wh.verify(payload, {
@@ -81,12 +82,21 @@ app.post(
           'svix-signature': svix_signature,
         });
         
-        console.log('Webhook verified successfully');
-        console.log('Event type:', evt?.type);
+        // console.log('Webhook verified successfully');
+        // console.log('Event type:', evt?.type);
 
         // Parse the payload
         const eventData = JSON.parse(payload).data;
-        
+        const existingUser = await User.findById(eventData.id);
+        if (existingUser) {
+          return res.status(200).json({ message: 'User already exists' });
+        }
+        console.log('Creating new user with data:', {
+          id: eventData.id,
+          email: eventData.email_addresses?.[0]?.email_address,
+      });
+      
+      console.log('Existing users:', await User.find({})); // This will show all users in your DB
         // Create new user
         const newUser = new User({
           name: `${eventData.first_name || ''} ${eventData.last_name || ''}`.trim(),
@@ -198,7 +208,6 @@ app.listen(PORT, async () => {
 
 const httpServer = createServer(app);
 
-// Socket.IO setup
 const io = new Server(httpServer, {
     cors: {
         origin: "http://localhost:3000",
@@ -206,25 +215,57 @@ const io = new Server(httpServer, {
     }
 });
 
-// WebSocket connection handling
+// Track active users per room
+const activeUsers = {};
+
 io.on("connection", (socket) => {
     console.log(`User connected: ${socket.id}`);
 
-    // Handle chat messages
+    socket.on("join_room", ({ room, userName, userId }) => {
+        socket.join(room);
+        
+        // Add user to active users for this room
+        if (!activeUsers[room]) {
+            activeUsers[room] = [];
+        }
+        activeUsers[room].push(userName);
+        
+        // Broadcast updated active users list
+        io.to(room).emit("active_users", activeUsers);
+        
+        console.log(`User ${userName} joined room ${room}`);
+    });
+
+    socket.on("leave_room", (room) => {
+        socket.leave(room);
+        
+        // Remove user from active users
+        if (activeUsers[room]) {
+            activeUsers[room] = activeUsers[room].filter(user => user.socketId !== socket.id);
+            io.to(room).emit("active_users", activeUsers);
+        }
+        
+        console.log(`User left room ${room}`);
+    });
+
     socket.on("chat_message", (data) => {
-        // Broadcast the message to all other clients
-        socket.broadcast.emit("chat_message", data);
+        // Send to all in room except sender
+        socket.to(data.room).emit("chat_message", data);
     });
 
     socket.on("disconnect", () => {
+        // Remove user from all active rooms
+        Object.keys(activeUsers).forEach(room => {
+            activeUsers[room] = activeUsers[room].filter(user => user.socketId !== socket.id);
+            io.to(room).emit("active_users", activeUsers);
+        });
+        
         console.log(`User disconnected: ${socket.id}`);
     });
 });
 
-// Start server
-
 httpServer.listen(3001, () => {
-    console.log(`Server running on port ${3001}`);
+    console.log(`Websocket server running on port 3001`);
 });
 
 export default app;
