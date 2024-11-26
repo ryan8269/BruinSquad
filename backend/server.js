@@ -8,13 +8,19 @@ import { Webhook } from 'svix';
 import bodyParser from 'body-parser';
 import { createServer } from "http";
 import { Server } from "socket.io";
+import Activity from './models/activity.model.js';
+import cors from 'cors';
 import { server1 } from 'svix/dist/openapi/servers.js';
 import mongoose from 'mongoose';
 
 dotenv.config();
 
 const app = express();
-
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 // Middleware for regular routes
 app.use(express.json());
 app.use("/api/activity", activityRoutes); 
@@ -156,14 +162,28 @@ app.get('/api/users/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-//chat routes
+//debugging
+app.get('/api/activities', async (req, res) => {
+  try {
+    const activities = await Activity.find({});
+    res.json({ activities });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+// server.js - Updated chat routes
 app.get('/api/chat/:sport', async (req, res) => {
   try {
-    const activity = await Activity.findOne({ name: req.params.sport })
-      .populate('chatMessages.userId', 'username'); // This populates user info
+    const activity = await Activity.findOne({ name: req.params.sport });
+    
+    if (!activity) {
+      console.log(`No activity found for sport: ${req.params.sport}`);
+      return res.status(404).json({ error: 'Sport not found' });
+    }
+    
     res.json({ chatMessages: activity.chatMessages });
   } catch (error) {
+    console.error('GET /api/chat/:sport error:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -171,19 +191,27 @@ app.get('/api/chat/:sport', async (req, res) => {
 app.post('/api/chat', async (req, res) => {
   try {
     const { sport, message, userId, username } = req.body;
+    
     const activity = await Activity.findOne({ name: sport });
     
-    // Verify userId is valid ObjectId
+    if (!activity) {
+      console.log(`No activity found for sport: ${sport}`);
+      return res.status(404).json({ error: 'Sport not found' });
+    }
+
     const newMessage = {
-      userId: mongoose.Types.ObjectId(userId),
+      userId,
       username,
-      message
+      message,
+      timestamp: new Date()
     };
-    
+
     activity.chatMessages.push(newMessage);
     await activity.save();
-    res.json({ success: true });
+    
+    res.json({ success: true, message: newMessage });
   } catch (error) {
+    console.error('POST /api/chat error:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -193,7 +221,7 @@ app.get("/", (req, res) => {
   res.send("Hello from Sigma Sigma Sigma");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, async () => {
   try {

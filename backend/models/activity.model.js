@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Message Schema
+// Modified chatMessageSchema
 const chatMessageSchema = new Schema({
     userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        type: String, // Changed from ObjectId to String for Clerk IDs
         required: true
     },
     username: {
