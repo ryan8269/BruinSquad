@@ -1,58 +1,45 @@
-'use client';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { constants } from "fs";
-import { HeartIcon, UsersIcon, UserCircleIcon } from "lucide-react";
-import Link from "next/link";
-import { useSession} from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server';
+import ChatComponent from './ChatComponent';
 
-import { io, Socket } from "socket.io-client";
-import { useEffect, useState } from "react";
-import { useUser } from '@clerk/clerk-react'
-import { time } from "console";
-
-const socket: Socket = io("http://localhost:3001"); //FIXME
-
-
-export default function Home() {        
-
-    const [message,setMessage] = useState<String>("")
-    const [messageReceived, setMessageReceived] = useState<Array<string>>([])
-    const { isSignedIn, user, isLoaded } = useUser()
-
-    
-    const sendMessage= () =>{
-        const currentTime = Date.now();
-        socket.emit("send_message", {user: user?.fullName, id: user?.id, message: message, time: currentTime});
-        console.log(user?.fullName);
+export default async function Page() {
+  const user = await currentUser();
+  
+  if (!user) return <div>Not signed in</div>;
+  
+  // Since we're in a server component, we can fetch directly
+  async function getMongoUser() {
+    try {
+      const response = await fetch(`http://localhost:4000/api/users/${user.id}`, {
+        cache: 'no-store'  // Disable caching for development
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return null;
     }
+  }
+  
+  const mongoUser = await getMongoUser();
 
-    useEffect(() => {
-        socket.on("receive_message", (data) =>
-        {
-            setMessageReceived((prev) => {return [...prev,data.user+":"+data.message+" @ "+data.time.toString()]});
-        }
-        )
-    }, [socket])
+  return (
+    <div>
+      <h1>Hello {user.firstName}</h1>
+      
+      {/* Display the MongoDB user data */}
+      <div>
+        <h2>Your Preferences:</h2>
+        <pre>{JSON.stringify(mongoUser, null, 2)}</pre>
+      </div>
 
-    return (
-        <>
-        <div>
-            <input placeholder ="message..." onChange={(e) => {setMessage(e.currentTarget.value)}}
-            />
-            <button onClick={sendMessage}> Send Message</button>
-            <h2>
-                Username: {user?.fullName}
-            </h2>
-            <h1>
-                Message:
-            </h1>
-            <ul>
-                {messageReceived.map((msg, index) => (
-                    <li key={index}>{msg}</li>
-                ))}
-            </ul>
-        </div>
-        </>
-    );
+      <ChatComponent
+        userName={user.firstName + ' ' + user.lastName}
+        userId={user.id}
+      />
+    </div>
+  );
 }

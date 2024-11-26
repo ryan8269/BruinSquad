@@ -90,7 +90,7 @@ app.post(
         // Create new user
         const newUser = new User({
           name: `${eventData.first_name || ''} ${eventData.last_name || ''}`.trim(),
-          clerkId: eventData.id,
+          _id: eventData.id,
           email: eventData.email_addresses?.[0]?.email_address || '',
           profileImage: eventData.profile_image_url || '',
           isMatched: false,
@@ -128,6 +128,57 @@ app.post(
   }
 );
 
+//user routes
+app.get('/api/users/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    res.json({ user });
+  } catch (error) {
+    // Handle invalid ObjectId format
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//chat routes
+app.get('/api/chat/:sport', async (req, res) => {
+  try {
+    const activity = await Activity.findOne({ name: req.params.sport })
+      .populate('chatMessages.userId', 'username'); // This populates user info
+    res.json({ chatMessages: activity.chatMessages });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { sport, message, userId, username } = req.body;
+    const activity = await Activity.findOne({ name: sport });
+    
+    // Verify userId is valid ObjectId
+    const newMessage = {
+      userId: mongoose.Types.ObjectId(userId),
+      username,
+      message
+    };
+    
+    activity.chatMessages.push(newMessage);
+    await activity.save();
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 app.get("/", (req, res) => {
   res.send("Hello from Sigma Sigma Sigma");
 });
@@ -145,27 +196,35 @@ app.listen(PORT, async () => {
 });
 
 
-//SOCKET.IO
-
-
 const httpServer = createServer(app);
+
+// Socket.IO setup
 const io = new Server(httpServer, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET","POST"]
-  },
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
 });
 
+// WebSocket connection handling
 io.on("connection", (socket) => {
-  console.log(socket.id); 
+    console.log(`User connected: ${socket.id}`);
 
-  socket.on("send_message", (data) =>{
-    socket.broadcast.emit("receive_message", data)
-  })
+    // Handle chat messages
+    socket.on("chat_message", (data) => {
+        // Broadcast the message to all other clients
+        socket.broadcast.emit("chat_message", data);
+    });
+
+    socket.on("disconnect", () => {
+        console.log(`User disconnected: ${socket.id}`);
+    });
 });
 
-httpServer.listen(3001, () => { //FIXME
-  console.log("SERVER RUNNING")
+// Start server
+
+httpServer.listen(3001, () => {
+    console.log(`Server running on port ${3001}`);
 });
 
 export default app;
