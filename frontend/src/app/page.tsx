@@ -14,43 +14,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Side Navigation */}
-      <div className="w-64 bg-blue-900 text-white p-6 space-y-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold">BruinMatch</h1>
-          <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
-        </div>
-        
-        <nav className="space-y-4">
-          <Link href="/dashboard" className="flex items-center space-x-3 p-2 rounded hover:bg-blue-800">
-            <HomeIcon className="h-5 w-5" />
-            <span>Dashboard</span>
-          </Link>
-          <Link href="/messages" className="flex items-center space-x-3 p-2 rounded hover:bg-blue-800">
-            <MessageCircleIcon className="h-5 w-5" />
-            <span>Messages</span>
-          </Link>
-          <Link href="/explore" className="flex items-center space-x-3 p-2 rounded hover:bg-blue-800">
-            <UsersIcon className="h-5 w-5" />
-            <span>Explore</span>
-          </Link>
-          <Link href="/settings" className="flex items-center space-x-3 p-2 rounded hover:bg-blue-800">
-            <SettingsIcon className="h-5 w-5" />
-            <span>Settings</span>
-          </Link>
-        </nav>
-
-        <div className="absolute bottom-6">
-          <div className="flex items-center space-x-3 p-2">
-            <UserCircleIcon className="h-8 w-8" />
-            <div>
-              <p className="font-medium">John Doe</p>
-              <p className="text-sm text-blue-200">Computer Science</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="flex-1 bg-gray-50">
         {/* Top Navigation */}
