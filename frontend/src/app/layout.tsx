@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             <nav className="space-y-4">
               <Link
-                href="/"
+                href="/dashboard"
                 className="flex items-center space-x-3 p-2 rounded hover:bg-blue-800"
               >
                 <HomeIcon className="h-5 w-5" />
