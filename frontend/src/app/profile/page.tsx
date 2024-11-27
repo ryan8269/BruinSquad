@@ -1,74 +1,76 @@
 'use client';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { UserCircleIcon, EditIcon, CameraIcon } from "lucide-react";
+import { UserCircleIcon } from "lucide-react";
 
 export default function ProfilePage() {
-    //WE ACTUALLY NEED THE DATA
-    //TO DO
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const router = useRouter();
+  const { id } = router.query; // Assuming you are passing user ID as a query param in the route
+
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`/api/users/${id}`);
+        const result = await response.json();
+        if (result.success) {
+          setUser(result.data);
+        } else {
+          setError(result.error);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setError("An error occurred while fetching the user.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [id]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <Card className="max-w-2xl mx-auto">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="relative">
-              <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center">
-                <UserCircleIcon className="w-24 h-24 text-blue-500" />
-              </div>
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="absolute bottom-0 right-0 rounded-full bg-white"
-              >
-                <CameraIcon className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-          <CardTitle className="text-2xl font-bold flex items-center justify-center gap-2">
-            John Doe
-            <Button variant="ghost" size="icon">
-              <EditIcon className="h-4 w-4" />
-            </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <h3 className="font-semibold text-gray-600">Basic Information</h3>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-gray-500">Major</p>
-                  <p>Computer Science</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Year</p>
-                  <p>Junior</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Location</p>
-                  <p>Westwood</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Interests</p>
-                  <p>Coding, Basketball, Photography</p>
-                </div>
-              </div>
-            </div>
+    <Card>
+      <CardHeader>
+        <UserCircleIcon className="h-12 w-12" />
+        <CardTitle>{user.name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <section>
+          <h2>Basic Information</h2>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Major:</strong> Computer Science (Placeholder)</p>
+          <p><strong>Year:</strong> Junior (Placeholder)</p>
+          <p><strong>Location:</strong> Westwood (Placeholder)</p>
+          <p><strong>Interests:</strong> {/* Display selected sports */}
+            {Object.entries(user.sports)
+              .filter(([sport, isSelected]) => isSelected && sport !== "none")
+              .map(([sport]) => sport.charAt(0).toUpperCase() + sport.slice(1))
+              .join(", ") || "None"}
+          </p>
+        </section>
 
-            <div className="space-y-2">
-              <h3 className="font-semibold text-gray-600">Bio</h3>
-              <p className="text-sm">
-                Computer Science student at UCLA passionate about technology and innovation. 
-                Always eager to meet new people and collaborate on interesting projects.
-              </p>
-            </div>
+        <section>
+          <h2>Bio</h2>
+          <p>{user.bio || "No bio available."}</p>
+        </section>
 
-            <div className="pt-4">
-              <Button className="w-full">Edit Profile</Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        <Button>Edit Profile</Button>
+      </CardContent>
+    </Card>
   );
 }

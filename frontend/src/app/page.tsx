@@ -1,8 +1,7 @@
 'use client';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { HeartIcon, UsersIcon, UserCircleIcon, HomeIcon, MessageCircleIcon, SettingsIcon } from "lucide-react";
-import Link from "next/link";
+import { HeartIcon, UsersIcon, UserCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
