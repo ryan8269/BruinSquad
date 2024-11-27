@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { UserCircleIcon, EditIcon, CameraIcon } from "lucide-react";
 
 export default function ProfilePage() {
+    //WE ACTUALLY NEED THE DATA
+    //TO DO
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <Card className="max-w-2xl mx-auto">
