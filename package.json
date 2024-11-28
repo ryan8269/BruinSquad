@@ -15,6 +15,7 @@
     "express": "^4.21.1",
     "mongoose": "^8.8.1",
     "ngrok": "^5.0.0-beta.2",
+    "socket.io": "^4.8.1",
     "svix": "^1.40.0"
   },
   "devDependencies": {
