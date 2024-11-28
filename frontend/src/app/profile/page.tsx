@@ -8,7 +8,7 @@ export default async function ProfilePage() {
 
   async function getMongoUser() {
     try {
-      const response = await fetch(`http://localhost:4000/api/users/${user.id}`, {
+      const response = await fetch(`http://localhost:4000/api/users/${user?.id}`, {
         cache: 'no-store',
       });
 
@@ -51,7 +51,7 @@ export default async function ProfilePage() {
       </div>
 
       {/* Sports Preferences */}
-      <div className="bg-white shadow rounded-lg p-6">
+      {/* <div className="bg-white shadow rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Sports Preferences</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {Object.entries(mongoUser.sports).map(([sport, active]) => (
@@ -67,7 +67,7 @@ export default async function ProfilePage() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Actions */}
       <div className="mt-8 flex justify-end gap-4">
