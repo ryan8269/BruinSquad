@@ -2,13 +2,14 @@ import Activity from "../models/activity.model.js";
 
 export const getActivities = async (req, res) => {
     try {
-        const activities = await Activity.find({});
+        const filters = req.query; // Extract query parameters from the request
+        const activities = await Activity.find(filters); // Pass filters directly to the query
         res.status(200).json({ success: true, data: activities });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, error: error.message });
     }
-}
+};
 
 export const createActivity = async (req,res) => {
     const activity = req.body;
@@ -27,8 +28,7 @@ export const createActivity = async (req,res) => {
 
 export const updateActivity = async (req, res) => {
     const {id} = req.params //brackets it will look to see what variable has the same name
-    const activity = req.body //the actual acitivity name, type, image
-    //activity.name
+    const activity = req.body //the actual activity name, type, image
     try {
         const updated = await Activity.findByIdAndUpdate(id, activity, {new: true})
         if (!updated) {
