@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en">
         <body className="flex">
           {/* Sidebar Navigation */}
-          <div className="w-64 bg-blue-900 text-white p-6 space-y-8">
+          <div className="w-64 bg-blue-900 text-white p-6 space-y-8 h-screen">
             <div className="mb-8">
               <h1 className="text-2xl font-bold">BruinMatch</h1>
               <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>

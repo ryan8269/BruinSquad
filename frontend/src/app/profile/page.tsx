@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import { currentUser } from '@clerk/nextjs/server';
+import { mongo } from 'mongoose';
 
 export default async function ProfilePage() {
   const user = await currentUser();
 
-  if (!user) return <div className="text-center text-red-500 mt-10">Not signed in</div>;
+  if (!user) {
+    return <div className="text-center text-red-500 mt-10">Not signed in</div>;
+  }
 
   async function getMongoUser() {
     try {
@@ -25,33 +28,34 @@ export default async function ProfilePage() {
     }
   }
 
-  const mongoUser = await getMongoUser();
+  const tmpMongoUser = await getMongoUser();
+  const mongoUser = tmpMongoUser.user;
 
-  if (!mongoUser) return <div className="text-center text-gray-500 mt-10">User data unavailable</div>;
+  if (!mongoUser) {
+    return <div className="text-center text-gray-500 mt-10">User data unavailable</div>;
+  }
+
 
   return (
     <div className="max-w-4xl mx-auto p-6">
       {/* Profile Header */}
       <div className="flex items-center gap-6 mb-8">
-        <div className="relative h-24 w-24 rounded-full overflow-hidden border border-gray-300">
+        {/* <div className="relative h-24 w-24 rounded-full overflow-hidden border border-gray-300">
           <Image
             src={mongoUser.profileImage || '/placeholder-avatar.png'}
             alt={`${mongoUser.name}'s profile`}
             layout="fill"
             objectFit="cover"
           />
-        </div>
+        </div> */}
         <div>
           <h1 className="text-3xl font-bold">{mongoUser.name}</h1>
           <p className="text-gray-500">{mongoUser.email}</p>
-          <p className={`mt-2 text-sm ${mongoUser.isMatched ? 'text-green-500' : 'text-red-500'}`}>
-            {mongoUser.isMatched ? 'Matched' : 'Not Matched'}
-          </p>
         </div>
       </div>
 
       {/* Sports Preferences */}
-      {/* <div className="bg-white shadow rounded-lg p-6">
+      <div className="bg-white shadow rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Sports Preferences</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {Object.entries(mongoUser.sports).map(([sport, active]) => (
@@ -67,7 +71,7 @@ export default async function ProfilePage() {
             </div>
           ))}
         </div>
-      </div> */}
+      </div>
 
       {/* Actions */}
       <div className="mt-8 flex justify-end gap-4">
