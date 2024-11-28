@@ -10,7 +10,7 @@
 
 // const activities = [
 //   {
-//     name: 'Basketball',
+//     name: 'basketball',
 //     type: 'Team',
 //     image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc',
 //     chatMessages: [],
@@ -28,7 +28,7 @@
 //     ]
 //   },
 //   {
-//     name: 'Running',
+//     name: 'running',
 //     type: 'Individual',
 //     image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5',
 //     chatMessages: [],
@@ -41,7 +41,20 @@
 //     ]
 //   },
 //   {
-//     name: 'Tennis',
+//     name: 'football',
+//     type: 'Team',
+//     image: 'https://plus.unsplash.com/premium_photo-1667598736219-606b0ff0d5bb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YW1lcmljYW4lMjBmb290YmFsfGVufDB8fDB8fHww',
+//     chatMessages: [],
+//     locations: [
+//       {
+//           name: 'Intramural Fields',
+//           description: 'Main outdoor field at UCLA',
+//           imageUrl: 'https://uclaclubsports.com/images/2022/3/24/IMG_1989.JPG'
+//       }
+//     ]
+//   },
+//   {
+//     name: 'tennis',
 //     type: 'Both',
 //     image: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0',
 //     chatMessages: [],
@@ -59,14 +72,25 @@
 //     ]
 //   },
 //   {
-//     name: 'Volleyball',
+//     name: 'volleyball',
 //     type: 'Team',
 //     image: 'https://images.unsplash.com/photo-1592656094267-764a45160876',
 //     chatMessages: [],
-//     locations: []
+//     locations: [
+//       {
+//         name: 'John Wooden Center',
+//         description: 'Volleyball at Pardee Gymnasium',
+//         imageUrl: 'https://uclaclubsports.com/images/2015/10/13/IMG_793646.JPG'
+//       },
+//       {
+//         name: 'Sunset Canyon Recreation Center',
+//         description: 'Beach Volleyball at Sunset Rec',
+//         imageUrl: 'https://s3.amazonaws.com/cms.ipressroom.com/173/files/20234/20230507_UCLAMag_1092_resize.jpg'
+//       }
+//     ]
 //   },
 //   {
-//     name: 'Badminton',
+//     name: 'badminton',
 //     type: 'Both',
 //     image: 'https://images.unsplash.com/photo-1613918431703-aa2b56f13e49',
 //     chatMessages: [],
@@ -79,7 +103,7 @@
 //     ]
 //   },
 //   {
-//     name: 'Swimming',
+//     name: 'swimming',
 //     type: 'Both',
 //     image: 'https://images.unsplash.com/photo-1560089000-7433a4ebbd64',
 //     chatMessages: [],
@@ -97,7 +121,7 @@
 //     ]
 //   },
 //   {
-//     name: 'Yoga',
+//     name: 'yoga',
 //     type: 'Individual',
 //     image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b',
 //     chatMessages: [],
@@ -110,7 +134,7 @@
 //     ]
 //   },
 //   {
-//     name: 'Gym',
+//     name: 'gym',
 //     type: 'Individual',
 //     image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48',
 //     chatMessages: [],
