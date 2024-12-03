@@ -60,12 +60,6 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         {/* Button that will direct us to the main page */}
         <Link href="/">
           <div className="flex items-center space-x-2">
-            {/* <Image
-              src="/logo.png"
-              alt="BruinMatch Logo"
-              width={40}
-              height={40}
-            /> */}
             <h1 className="text-2xl font-bold">BruinMatch</h1>
           </div>
           <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
