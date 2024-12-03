@@ -22,6 +22,7 @@ import {
   HomeIcon,
   MessageCircleIcon,
   SettingsIcon,
+  UserCircleIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -55,12 +56,28 @@ function MainLayout({ children }: { children: React.ReactNode }) {
     <div className="flex w-full">
       {/* Sidebar Navigation */}
       <div className="w-64 bg-blue-500 text-white p-6 space-y-8 h-full">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold">BruinMatch</h1>
+        {/* Button that will direct us to the main page */}
+        <Link href="/">
+          <div className="flex items-center space-x-2">
+            {/* <Image
+              src="/logo.png"
+              alt="BruinMatch Logo"
+              width={40}
+              height={40}
+            /> */}
+            <h1 className="text-2xl font-bold">BruinMatch</h1>
+          </div>
           <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
-        </div>
+        </Link>
 
         <nav className="space-y-4">
+          {/* Once I click on this, direct me to /profile using Link */}
+          <button
+            className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
+          >
+            <UserCircleIcon className="h-12 w-12" />
+            <Link href="/profile">Profile</Link>
+          </button>
           {basketball && (
             <button
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
