@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { useUser } from '@clerk/clerk-react';
 
 interface sportContextType {
   basketball: boolean;
@@ -39,6 +40,22 @@ export const SportProvider = ({ children }: { children: ReactNode }) => {
   const [yoga, setYoga] = useState(false);
   const [activeRoom, setActiveRoom] = useState<string | null>(null);
 
+  interface sportsToSetter {
+    [key: string]: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+
+  const settingDictionary:sportsToSetter = {
+    "gym" : setGym,
+    "basketball" : setBasketball,
+    "running" : setRunning,
+    "tennis" : setTennis,
+    "football" : setFootball,
+    "volleyball" : setVolleyball,
+    "badminton" : setBadminton,
+    "swimming" : setSwimming,
+    "yoga" : setYoga,
+  }
+
   const toggleGym = () => setGym((prev) => !prev);
   const toggleBasketball = () => setBasketball((prev) => !prev);
   const toggleRunning = () => setRunning((prev) => !prev);
@@ -48,6 +65,37 @@ export const SportProvider = ({ children }: { children: ReactNode }) => {
   const toggleBadminton = () => setBadminton((prev) => !prev);
   const toggleSwimming = () => setSwimming((prev) => !prev);
   const toggleYoga = () => setYoga((prev) => !prev);
+
+  const { user } = useUser();
+
+  const intialize_preferences = async () => {
+    if (!user){
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:4000/api/users/${user.id}`, {
+        cache: 'no-store',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+
+      const data = await response.json();
+      for (const [key, value] of Object.entries(data.user.sports)) {
+        if (key in settingDictionary)
+        {
+          settingDictionary[key](Boolean(value));
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    } 
+  }
+
+  useEffect(() => {
+    intialize_preferences();
+  },[user])
 
   return (
     <sportContext.Provider 
