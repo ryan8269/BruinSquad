@@ -4,9 +4,9 @@ import {getActivities, createActivity, updateActivity, deleteActivity} from "../
 
 const router = express.Router();
 
-router.get("/", getActivities);
+router.get("/", getActivity);
 router.post("/", createActivity);
-router.put("/:id", updateActivity);
-router.delete("/:id", deleteActivity);
+router.put("/", updateActivity);
+router.delete("/", deleteActivity);
 
 export default router
