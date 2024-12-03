@@ -15,6 +15,8 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useClerk,
+  useUser,
 } from '@clerk/nextjs';
 import './globals.css';
 import {
@@ -26,6 +28,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as styles from './styles.module.css';
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -53,6 +58,9 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   const { yoga } = usesport();
   const { activeRoom, setActiveRoom } = usesport();
 
+  const {signOut} = useClerk();
+  const {user} = useUser();
+
   return (
     <div className="flex w-full">
       {/* Sidebar Navigation */}
@@ -67,12 +75,6 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 
         <nav className="space-y-4">
           {/* Once I click on this, direct me to /profile using Link */}
-          <button
-            className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-          >
-            <UserCircleIcon className="h-12 w-12" />
-            <Link href="/profile">Profile</Link>
-          </button>
           {basketball && (
             <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
@@ -178,12 +180,55 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full"> {/* Add w-full here */}
         {/* Authentication Controls */}
-        <div className="p-4 bg-gray-100 flex justify-end items-center">
+        <div className="p-4 bg-gray-100 flex items-center">
+            <button
+                className="top-navbar"
+              >
+            <Link
+              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
+              href={"/explore"}
+            >
+            <span> Explore </span>
+            </Link>
+          </button>
+          <button className = {`${styles.top_navbar}`}>
+            EVENTS
+          </button>
+
           <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+              <button
+                className={`${styles.top_navbar} ml-auto`}
+              >
+                <img
+                src={user?.imageUrl} 
+                className="w-10 h-10 rounded-full border border-gray-300"
+                />
+                Profile
+              </button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  className="min-w-[220px] rounded-md bg-white p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
+
+                >
+                  <DropdownMenu.Item>
+                      <button>
+                        <Link href="/profile">Preferences</Link>
+                      </button>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item>
+                    <button onClick={() => signOut()}>
+                      Sign Out
+                    </button>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
           </SignedIn>
         </div>
 
