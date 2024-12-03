@@ -54,7 +54,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex w-full">
       {/* Sidebar Navigation */}
-      <div className="w-64 bg-blue-500 text-white p-6 space-y-8 h-screen">
+      <div className="w-64 bg-blue-500 text-white p-6 space-y-8 h-full">
         <div className="mb-8">
           <h1 className="text-2xl font-bold">BruinMatch</h1>
           <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
