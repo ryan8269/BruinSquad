@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { SportProvider, usesport } from "@/app/SportContent";
 
 const socket = io("http://localhost:3001");
 
@@ -67,7 +68,7 @@ const SPORTS = [
 type Sport = typeof SPORTS[number];
 
 export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
-    const [activeRoom, setActiveRoom] = useState<string | null>(null);
+    const {activeRoom, setActiveRoom} = usesport();
     const [messages, setMessages] = useState<MessagesByRoom>({});
     const [message, setMessage] = useState<string>("");
     const [activeUsers, setActiveUsers] = useState<ActiveUsers>({});
@@ -211,83 +212,82 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
     }
 
     return (
-        <div className="flex h-[600px] gap-4 p-4">
+        <div className="flex h-screen flex-col gap-4 p-4">
             {/* Sports sidebar */}
-            <div className="w-48 space-y-2">
+            {/* <div className="w-48 space-y-2">
                 {SPORTS.map((sport) => renderSportButton(sport))}
-            </div>
+            </div> */}
 
             {/* Chat area */}
             {activeRoom ? (
-                <div className="flex-1 flex flex-col border rounded-lg">
-                    {/* Room header */}
-                    <div className="p-3 border-b bg-gray-50">
-                        <h2 className="font-bold text-lg">
-                            {activeRoom.charAt(0).toUpperCase() + activeRoom.slice(1)} Chat
-                        </h2>
-                        <div className="text-sm text-gray-500">
-                            Active Users: {activeUsers[activeRoom]?.length || 0}
-                        </div>
-                    </div>
-
-                    {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-2">
-                        {isLoading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <div className="text-gray-500">Loading messages...</div>
-                            </div>
-                        ) : messages[activeRoom]?.length === 0 ? (
-                            <div className="text-center text-gray-500 mt-4">
-                                No messages yet. Start the conversation!
-                            </div>
-                        ) : (
-                            messages[activeRoom]?.map((message: ChatMessage, index: number) => (
-                                <div 
-                                    key={index}
-                                    className={`${message.userId === mongoUser.user._id ? 'ml-auto' : ''} 
-                                              max-w-[70%] break-words`}
-                                >
-                                    <div className={`rounded-lg p-2 ${
-                                        message.userId === mongoUser.user._id 
-                                            ? 'bg-blue-500 text-white ml-auto' 
-                                            : 'bg-gray-100'
-                                    }`}>
-                                        <div className="text-sm font-bold">{message.user}</div>
-                                        <div>{message.message}</div>
-                                        <div className="text-xs opacity-75">{message.time}</div>
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                    </div>
-
-                    {/* Input area */}
-                    <div className="p-3 border-t bg-gray-50">
-                        <div className="flex gap-2">
-                            <input
-                                className="flex-1 p-2 border rounded"
-                                value={message}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                                    setMessage(e.target.value)}
-                                onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => 
-                                    e.key === 'Enter' && sendMessage()}
-                                placeholder="Type a message..."
-                            />
-                            <button 
-                                onClick={sendMessage}
-                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 
-                                         transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                disabled={!message.trim()}
-                            >
-                                Send
-                            </button>
-                        </div>
-                    </div>
+            <div className="flex-1 flex flex-col bg-white rounded-lg shadow-lg overflow-hidden">
+                {/* Room header */}
+                <div className="p-4 border-b bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+                <h2 className="font-semibold text-xl">
+                    {activeRoom.charAt(0).toUpperCase() + activeRoom.slice(1)} Chat
+                </h2>
+                <div className="text-sm opacity-75">
+                    Active Users: {activeUsers[activeRoom]?.length || 0}
                 </div>
+                </div>
+
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                {isLoading ? (
+                    <div className="flex items-center justify-center h-full text-gray-500">
+                    Loading messages...
+                    </div>
+                ) : messages[activeRoom]?.length === 0 ? (
+                    <div className="text-center text-gray-500 mt-4">
+                    No messages yet. Start the conversation!
+                    </div>
+                ) : (
+                    messages[activeRoom]?.map((message: ChatMessage, index: number) => (
+                    <div 
+                        key={index}
+                        className={`${message.userId === mongoUser.user._id ? 'ml-auto' : ''} 
+                                    max-w-[70%] break-words`}
+                    >
+                        <div className={`rounded-lg p-3 shadow-sm ${
+                        message.userId === mongoUser.user._id
+                            ? 'bg-blue-500 text-white ml-auto'
+                            : 'bg-gray-100'
+                        }`}>
+                        <div className="text-sm font-semibold">{message.user}</div>
+                        <div>{message.message}</div>
+                        <div className="text-xs opacity-75">{message.time}</div>
+                        </div>
+                    </div>
+                    ))
+                )}
+                </div>
+
+                {/* Input area */}
+                <div className="p-4 border-t bg-gray-100">
+                <div className="flex gap-3">
+                    <input
+                    className="flex-1 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={message}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
+                    onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                        e.key === 'Enter' && sendMessage()
+                    }
+                    placeholder="Type a message..."
+                    />
+                    <button 
+                    onClick={sendMessage}
+                    className="px-5 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!message.trim()}
+                    >
+                    Send
+                    </button>
+                </div>
+                </div>
+            </div>
             ) : (
-                <div className="flex-1 flex items-center justify-center text-gray-500">
-                    Select a sport to join its chat room
-                </div>
+            <div className="flex-1 flex items-center justify-center text-gray-500">
+                Select a sport to join its chat room
+            </div>
             )}
         </div>
     );

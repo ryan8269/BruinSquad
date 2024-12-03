@@ -22,6 +22,7 @@ import {
   HomeIcon,
   MessageCircleIcon,
   SettingsIcon,
+  UserCircleIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -50,105 +51,125 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   const { badminton } = usesport();
   const { swimming } = usesport();
   const { yoga } = usesport();
+  const { activeRoom, setActiveRoom } = usesport();
 
   return (
     <div className="flex w-full">
       {/* Sidebar Navigation */}
       <div className="w-64 bg-blue-500 text-white p-6 space-y-8 h-full">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold">BruinMatch</h1>
+        {/* Button that will direct us to the main page */}
+        <Link href="/">
+          <div className="flex items-center space-x-2">
+            <h1 className="text-2xl font-bold">BruinMatch</h1>
+          </div>
           <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
-        </div>
+        </Link>
 
         <nav className="space-y-4">
+          {/* Once I click on this, direct me to /profile using Link */}
+          <button
+            className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
+          >
+            <UserCircleIcon className="h-12 w-12" />
+            <Link href="/profile">Profile</Link>
+          </button>
           {basketball && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("basketball")}
             >
               <Image src={BASKETBALL} alt="Basketball" width={50} height={50} />
               <span > League of Ballers </span>
-            </button>
+            </Link>
           )}
 
           {running && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("running")}
             >
               <Image src={RUNNING} alt="Running" width={50} height={50} />
               <span > Run Forest Run </span>
-            </button>
+            </Link>
           )}
 
           {tennis && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("tennis")}
             >
               <Image src={TENNIS} alt="Tennis" width={50} height={50} />
               <span> The Smash Bros </span>
-            </button>
+            </Link>
           )}
 
           {football && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("football")}
             >
               <Image src={FOOTBALL} alt="Football" width={50} height={50} />
               <span> Touchdown Town </span>
-            </button>
+            </Link>
           )}
 
           {volleyball && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("volleyball")}
             >
               <Image src={VOLLEYBALL} alt="Volleyball" width={50} height={50} />
               <span> Set, Spike, Repeat </span>
-            </button>
+            </Link>
           )}
 
           {badminton && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("badminton")}
             >
               <Image src={BADMINTON} alt="Badminton" width={50} height={50} />
               <span> Badminton Group Chat </span>
-            </button>
+            </Link>
           )}
 
           {swimming && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("swimming")}
             >
               <Image src={SWIMMING} alt="Swimming" width={50} height={50} />
               <span> The Pool Sharks </span>
-            </button> 
+            </Link> 
           )}
 
           {yoga && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("yoga")}
             >
               <Image src={YOGA} alt="Yoga" width={50} height={50} />
               <span> Stretch It Daddy </span>
-            </button>
+            </Link>
           )}
 
           {gym && (
-            <button
+            <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              onClick={() => alert("sport button clicked!")}
+              href={"/user/chat"}
+              onClick={() => setActiveRoom("gym")}
             >
               <Image src={GYM} alt="Gym" width={50} height={50} />
               <span> Gym Bros </span>
-            </button>
+            </Link>
           )}
 
         </nav>

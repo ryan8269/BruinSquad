@@ -10,6 +10,7 @@ interface sportContextType {
   swimming: boolean;
   yoga: boolean;
   gym: boolean;
+  activeRoom: string | null;
   
   toggleBasketball: () => void;
   toggleRunning: () => void;
@@ -20,6 +21,7 @@ interface sportContextType {
   toggleSwimming: () => void;
   toggleYoga: () => void;
   toggleGym: () => void;
+  setActiveRoom: (room: string) => void;
   // do this for all other sports
 }
 
@@ -35,6 +37,7 @@ export const SportProvider = ({ children }: { children: ReactNode }) => {
   const [badminton, setBadminton] = useState(false);
   const [swimming, setSwimming] = useState(false);
   const [yoga, setYoga] = useState(false);
+  const [activeRoom, setActiveRoom] = useState<string | null>(null);
 
   const toggleGym = () => setGym((prev) => !prev);
   const toggleBasketball = () => setBasketball((prev) => !prev);
@@ -57,7 +60,8 @@ export const SportProvider = ({ children }: { children: ReactNode }) => {
       volleyball, toggleVolleyball, 
       badminton, toggleBadminton, 
       swimming, toggleSwimming, 
-      yoga, toggleYoga
+      yoga, toggleYoga,
+      activeRoom, setActiveRoom
      }}>
       {children}
     </sportContext.Provider>
