@@ -1,5 +1,5 @@
 "use client";
-import { SigmaProvider, useSigma } from './SigmaContent';
+import { SportProvider, usesport } from './SportContent';
 import {
   ClerkProvider,
   SignInButton,
@@ -19,19 +19,27 @@ import Link from 'next/link';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <SigmaProvider>
+      <SportProvider>
         <html lang="en">
           <body className="flex">
             <MainLayout>{children}</MainLayout>
           </body>
         </html>
-      </SigmaProvider>
+      </SportProvider>
     </ClerkProvider>
   );
 }
 
 function MainLayout({ children }: { children: React.ReactNode }) {
-  const { sigma } = useSigma(); // Access sigma state
+  const { gym } = usesport(); // Access sport state
+  const { basketball } = usesport();
+  const { running } = usesport();
+  const { tennis } = usesport();
+  const { football } = usesport();
+  const { volleyball } = usesport();
+  const { badminton } = usesport();
+  const { swimming } = usesport();
+  const { yoga } = usesport();
 
   return (
     <div className="flex">
@@ -72,25 +80,92 @@ function MainLayout({ children }: { children: React.ReactNode }) {
             <span>Settings</span>
           </Link>
 
-          {/* Conditionally Render Sigma Button */}
-          {sigma && (
+          {basketball && (
             <button
-              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-green-600 hover:bg-green-700"
-              onClick={() => alert("Sigma button clicked!")}
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
             >
-              <span>🌀 Sigma Action</span>
+              <span> basketball Action</span>
             </button>
           )}
+
+          {running && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> running Action</span>
+            </button>
+          )}
+
+          {tennis && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> tennis Action</span>
+            </button>
+          )}
+
+          {football && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> football Action</span>
+            </button>
+          )}
+
+          {volleyball && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> volleyball Action</span>
+            </button>
+          )}
+
+          {badminton && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> badminton Action</span>
+            </button>
+          )}
+
+          {swimming && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> swimming Action</span>
+            </button> 
+          )}
+
+          {yoga && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> yoga Action</span>
+            </button>
+          )}
+
+          {gym && (
+            <button
+              className="w-full text-left flex items-center space-x-3 p-2 rounded bg-blue-600 hover:bg-blue-700"
+              onClick={() => alert("sport button clicked!")}
+            >
+              <span> gym Action</span>
+            </button>
+          )}
+
         </nav>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Sigma State Display */}
-        <div className="text-sm p-4 bg-gray-100">
-          Sigma state: {sigma ? 'True' : 'False'}
-        </div>
-
         {/* Authentication Controls */}
         <div className="p-4 bg-gray-100 flex justify-end items-center">
           <SignedOut>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useSigma } from '../SigmaContent';
+import { usesport } from '../SportContent';
 import { useState, useEffect } from 'react';
 import { useUser } from '@clerk/clerk-react';
 
@@ -8,7 +8,16 @@ export default function ProfilePage() {
   const { user } = useUser(); // Call useUser at the top level
   const [mongoUser, setMongoUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const { sigma, toggleSigma } = useSigma();
+  const { basketball, toggleBasketball } = usesport();
+  // do it for the other sports
+  const { running, toggleRunning } = usesport(); 
+  const { tennis, toggleTennis } = usesport();
+  const { football, toggleFootball } = usesport();
+  const { volleyball, toggleVolleyball } = usesport();
+  const { badminton, toggleBadminton } = usesport();
+  const { swimming, toggleSwimming } = usesport();
+  const { yoga, toggleYoga } = usesport();
+  const { gym, toggleGym } = usesport();
 
   // Fetch MongoDB user data on component mount
   useEffect(() => {
@@ -76,14 +85,54 @@ async function handleSubmit(event: React.FormEvent) {
       throw new Error(`Failed to update preferences: ${errorMessage}`);
     }
 
-    // Set sigma to true if "gym" is true, otherwise set it to false
-    if (preferences.sports.gym) {
-      if (!sigma) toggleSigma(); // Only toggle if sigma is currently false
-    } else {
-      if (sigma) toggleSigma(); // Only toggle if sigma is currently true
+    if (preferences.sports.basketball) {
+      if (!basketball) toggleBasketball(); 
+    } 
+    else {
+      if (basketball) toggleBasketball();
     }
 
-    alert('Preferences updated successfully');
+    // do it for all other sports
+    if (preferences.sports.running) {
+      if (!running) toggleRunning();
+    } else {
+      if (running) toggleRunning();
+    }
+    if (preferences.sports.tennis) {
+      if (!tennis) toggleTennis();
+    } else {
+      if (tennis) toggleTennis();
+    }
+    if (preferences.sports.football) {
+      if (!football) toggleFootball();
+    } else {
+      if (football) toggleFootball();
+    }
+    if (preferences.sports.volleyball) {
+      if (!volleyball) toggleVolleyball();
+    } else {
+      if (volleyball) toggleVolleyball();
+    }
+    if (preferences.sports.badminton) {
+      if (!badminton) toggleBadminton();
+    } else {
+      if (badminton) toggleBadminton();
+    }
+    if (preferences.sports.swimming) {
+      if (!swimming) toggleSwimming();
+    } else {
+      if (swimming) toggleSwimming();
+    }
+    if (preferences.sports.yoga) {
+      if (!yoga) toggleYoga();
+    } else {
+      if (yoga) toggleYoga();
+    }
+    if (preferences.sports.gym) {
+      if (!gym) toggleGym();
+    } else {
+      if (gym) toggleGym();
+    }
   } catch (error) {
     console.error('Error updating preferences:', error);
     alert('Error updating preferences');
