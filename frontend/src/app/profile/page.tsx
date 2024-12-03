@@ -1,5 +1,6 @@
 'use client';
 
+import { useSigma } from '../SigmaContent';
 import { useState, useEffect } from 'react';
 import { useUser } from '@clerk/clerk-react';
 
@@ -7,6 +8,7 @@ export default function ProfilePage() {
   const { user } = useUser(); // Call useUser at the top level
   const [mongoUser, setMongoUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const { sigma, toggleSigma } = useSigma();
 
   // Fetch MongoDB user data on component mount
   useEffect(() => {
@@ -39,48 +41,55 @@ export default function ProfilePage() {
   }, [user]); // Re-run effect if user changes
 
  // Form handler for updating preferences
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
+async function handleSubmit(event: React.FormEvent) {
+  event.preventDefault();
+  const formData = new FormData(event.target as HTMLFormElement);
 
-    // Initialize an object to hold the preferences in the desired format
-    const preferences: Record<string, any> = { sports: {} };
+  // Initialize an object to hold the preferences in the desired format
+  const preferences: Record<string, any> = { sports: {} };
 
-    // List of all sports (including those you want to send as false if not checked)
-    const allSports = [
-      'basketball', 'running', 'tennis', 'football', 'volleyball',
-      'badminton', 'swimming', 'yoga', 'gym',
-    ];
+  // List of all sports (including those you want to send as false if not checked)
+  const allSports = [
+    'basketball', 'running', 'tennis', 'football', 'volleyball',
+    'badminton', 'swimming', 'yoga', 'gym',
+  ];
 
-    // Loop through the list of all sports and set their value based on formData
-    allSports.forEach((sport) => {
-      const key = `sports[${sport}]`;
-      // If the sport is checked, it will be 'on', otherwise it will be 'off' or undefined
-      preferences.sports[sport] = formData.has(key) && formData.get(key) === 'on'; // True for 'on', false otherwise
+  // Loop through the list of all sports and set their value based on formData
+  allSports.forEach((sport) => {
+    const key = `sports[${sport}]`;
+    preferences.sports[sport] = formData.has(key) && formData.get(key) === 'on'; // True for 'on', false otherwise
+  });
+
+  console.log('Preferences:', preferences); // This will show the structure before sending it
+
+  try {
+    const response = await fetch(`http://localhost:4000/api/users/${mongoUser._id}`, {
+      method: 'PUT',
+      body: JSON.stringify(preferences),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
-    console.log('Preferences:', preferences); // This will show the structure before sending it
-
-    try {
-      const response = await fetch(`http://localhost:4000/api/users/${mongoUser._id}`, {
-        method: 'PUT',
-        body: JSON.stringify(preferences),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Failed to update preferences: ${errorMessage}`);
-      }
-
-      alert('Preferences updated successfully');
-    } catch (error) {
-      console.error('Error updating preferences:', error);
-      alert('Error updating preferences');
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Failed to update preferences: ${errorMessage}`);
     }
+
+    // Set sigma to true if "gym" is true, otherwise set it to false
+    if (preferences.sports.gym) {
+      if (!sigma) toggleSigma(); // Only toggle if sigma is currently false
+    } else {
+      if (sigma) toggleSigma(); // Only toggle if sigma is currently true
+    }
+
+    alert('Preferences updated successfully');
+  } catch (error) {
+    console.error('Error updating preferences:', error);
+    alert('Error updating preferences');
   }
+}
+
 
   // Show loading spinner or the form
   if (loading) {
@@ -93,6 +102,7 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
+      
       <form onSubmit={handleSubmit}>
         {/* Profile Header */}
         <div className="flex items-center gap-6 mb-8">

@@ -15,7 +15,6 @@ interface Sports {
     swimming: boolean;
     yoga: boolean;
     gym: boolean;
-    none: boolean;
 }
 
 interface MongoUser {
