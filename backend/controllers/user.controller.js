@@ -23,8 +23,11 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
+    console.log("HELLO");
+
     const { id } = req.params;
     const userData = req.body;
+
     console.log(userData)
     try {
         const updatedUser = await User.findByIdAndUpdate(id, userData, { new: true, runValidators: true });
@@ -32,10 +35,14 @@ export const updateUser = async (req, res) => {
             return res.status(404).json({ success: false, error: "User not found" });
         }
         res.status(200).json({ success: true, data: updatedUser });
+
+        console.log(updatedUser);
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, error: error.message });
     }
+
+    
 };
 
 export const deleteUser = async (req, res) => {

@@ -58,10 +58,6 @@ const userSchema = new mongoose.Schema(
         type: Boolean,
         default: false,
       },
-      none: {
-        type: Boolean,
-        default: true,
-      },
     },
   },
   {
@@ -69,18 +65,6 @@ const userSchema = new mongoose.Schema(
     _id: false,
   }
 );
-
-// Add some methods if needed
-userSchema.methods.toggleSport = function (sport) {
-  if (this.sports[sport] !== undefined) {
-    this.sports[sport] = !this.sports[sport];
-    // If any sport is selected, set none to false
-    if (this.sports[sport]) {
-      this.sports.none = false;
-    }
-  }
-  return this.save();
-};
 
 const User = mongoose.model("User", userSchema);
 

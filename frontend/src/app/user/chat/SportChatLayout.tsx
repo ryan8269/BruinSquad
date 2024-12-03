@@ -15,12 +15,11 @@ interface Sports {
     swimming: boolean;
     yoga: boolean;
     gym: boolean;
-    none: boolean;
 }
 
 interface MongoUser {
     success: boolean;
-    data: {
+    user: {
         _id: string;
         email: string;
         profileImage: string;
@@ -110,8 +109,8 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
             // Join the room
             socket.emit("join_room", {
                 room: activeRoom,
-                userName: mongoUser.data.name,
-                userId: mongoUser.data._id
+                userName: mongoUser.user.name,
+                userId: mongoUser.user._id
             });
         }
 
@@ -144,14 +143,14 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
             socket.off("chat_message", handleChatMessage);
             socket.off("active_users", handleActiveUsers);
         };
-    }, [activeRoom, mongoUser.data.name, mongoUser.data._id]);
+    }, [activeRoom, mongoUser.user.name, mongoUser.user._id]);
 
     const sendMessage = async (): Promise<void> => {
         if (message.trim() && activeRoom) {
             const currentTime = new Date();
             const messageData: ChatMessage & { room: string } = {
-                user: mongoUser.data.name,
-                userId: mongoUser.data._id,
+                user: mongoUser.user.name,
+                userId: mongoUser.user._id,
                 message: message.trim(),
                 time: currentTime.toLocaleTimeString(),
                 room: activeRoom,
@@ -172,8 +171,8 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
                     body: JSON.stringify({
                         sport: activeRoom,
                         message: message.trim(),
-                        userId: mongoUser.data._id,
-                        username: mongoUser.data.name
+                        userId: mongoUser.user._id,
+                        username: mongoUser.user.name
                     })
                 });
             } catch (error) {
@@ -190,7 +189,7 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
     };
 
     const renderSportButton = (sport: Sport) => {
-        if (mongoUser.data.sports[sport]) {
+        if (mongoUser.user.sports[sport]) {
             return (
                 <button
                     key={sport}
@@ -207,7 +206,7 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
         return null;
     };
 
-    if (!mongoUser || !mongoUser.data) {
+    if (!mongoUser || !mongoUser.user) {
         return <div>Loading user data...</div>;
     }
 
@@ -245,11 +244,11 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
                             messages[activeRoom]?.map((message: ChatMessage, index: number) => (
                                 <div 
                                     key={index}
-                                    className={`${message.userId === mongoUser.data._id ? 'ml-auto' : ''} 
+                                    className={`${message.userId === mongoUser.user._id ? 'ml-auto' : ''} 
                                               max-w-[70%] break-words`}
                                 >
                                     <div className={`rounded-lg p-2 ${
-                                        message.userId === mongoUser.data._id 
+                                        message.userId === mongoUser.user._id 
                                             ? 'bg-blue-500 text-white ml-auto' 
                                             : 'bg-gray-100'
                                     }`}>
