@@ -82,7 +82,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("basketball")}
             >
               <Image src={BASKETBALL} alt="Basketball" width={50} height={50} />
-              <span > League of Ballers </span>
+              <span > {sportsToChatName["basketball"]} </span>
             </Link>
           )}
 
@@ -93,7 +93,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("running")}
             >
               <Image src={RUNNING} alt="Running" width={50} height={50} />
-              <span > Run Forest Run </span>
+              <span > {sportsToChatName["running"]} </span>
             </Link>
           )}
 
@@ -104,7 +104,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("tennis")}
             >
               <Image src={TENNIS} alt="Tennis" width={50} height={50} />
-              <span> The Smash Bros </span>
+              <span> {sportsToChatName["tennis"]} </span>
             </Link>
           )}
 
@@ -115,7 +115,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("football")}
             >
               <Image src={FOOTBALL} alt="Football" width={50} height={50} />
-              <span> Touchdown Town </span>
+              <span> {sportsToChatName["football"]} </span>
             </Link>
           )}
 
@@ -126,7 +126,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("volleyball")}
             >
               <Image src={VOLLEYBALL} alt="Volleyball" width={50} height={50} />
-              <span> Set, Spike, Repeat </span>
+              <span> {sportsToChatName["volleyball"]} </span>
             </Link>
           )}
 
@@ -137,7 +137,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("badminton")}
             >
               <Image src={BADMINTON} alt="Badminton" width={50} height={50} />
-              <span> Badminton Group Chat </span>
+              <span> {sportsToChatName["badminton"]} </span>
             </Link>
           )}
 
@@ -148,7 +148,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("swimming")}
             >
               <Image src={SWIMMING} alt="Swimming" width={50} height={50} />
-              <span> The Pool Sharks </span>
+              <span> {sportsToChatName["swimming"]} </span>
             </Link> 
           )}
 
@@ -159,7 +159,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("yoga")}
             >
               <Image src={YOGA} alt="Yoga" width={50} height={50} />
-              <span> Stretch It Daddy </span>
+              <span> {sportsToChatName["yoga"]} </span>
             </Link>
           )}
 
@@ -170,7 +170,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               onClick={() => setActiveRoom("gym")}
             >
               <Image src={GYM} alt="Gym" width={50} height={50} />
-              <span> Gym Bros </span>
+              <span> {sportsToChatName["gym"]} </span>
             </Link>
           )}
 
@@ -237,4 +237,20 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       </div>
     </div>
   );
+}
+
+interface sportToChat {
+  [key: string]: string;
+}
+
+export const sportsToChatName: sportToChat = {
+  "basketball" : "League of Ballers",
+  "running" : "Run Forest Run",
+  "tennis" : "The Smash Bros",
+  "football" : "Touchdown Town",
+  "volleyball" : "Set, Spike, Repeat",
+  "badminton" : "Badminton Group Chat",
+  "swimming" : "The Pool Sharks",
+  "yoga" : "Stretch It Daddy",
+  "gym" : "Gym Bros",
 }
