@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { SportProvider, usesport } from "@/app/SportContent";
 
 const socket = io("http://localhost:3001");
 
@@ -67,7 +68,7 @@ const SPORTS = [
 type Sport = typeof SPORTS[number];
 
 export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
-    const [activeRoom, setActiveRoom] = useState<string | null>(null);
+    const {activeRoom, setActiveRoom} = usesport();
     const [messages, setMessages] = useState<MessagesByRoom>({});
     const [message, setMessage] = useState<string>("");
     const [activeUsers, setActiveUsers] = useState<ActiveUsers>({});
@@ -213,9 +214,9 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
     return (
         <div className="flex h-[600px] gap-4 p-4">
             {/* Sports sidebar */}
-            <div className="w-48 space-y-2">
+            {/* <div className="w-48 space-y-2">
                 {SPORTS.map((sport) => renderSportButton(sport))}
-            </div>
+            </div> */}
 
             {/* Chat area */}
             {activeRoom ? (
