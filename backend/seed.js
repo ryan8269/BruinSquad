@@ -25,6 +25,13 @@
 //         description: 'Main outdoor basketball courts at UCLA',
 //         imageUrl: 'https://recreation.ucla.edu/sites/default/files/styles/header_image/public/2023-06/DSC02070.jpg?itok=tWkpB5Wt'
 //         }
+//     ],
+//     events: [
+//         {
+//             location: 'John Wooden Center',
+//             time: '12-04-2024 9:00 pm',
+//             upvotes: 0
+//         }
 //     ]
 //   },
 //   {
@@ -38,7 +45,8 @@
 //         description: 'Track and field facility at UCLA',
 //         imageUrl: 'https://recreation.ucla.edu/sites/default/files/styles/slider_image/public/2021-09/Drake%20Stadium%20NEW.jpg'
 //       }
-//     ]
+//     ],
+//     events: []
 //   },
 //   {
 //     name: 'football',
@@ -51,7 +59,8 @@
 //           description: 'Main outdoor field at UCLA',
 //           imageUrl: 'https://uclaclubsports.com/images/2022/3/24/IMG_1989.JPG'
 //       }
-//     ]
+//     ],
+//     events: []
 //   },
 //   {
 //     name: 'tennis',
@@ -69,7 +78,8 @@
 //             description: 'Historic Tennis Facility',
 //             imageUrl: 'https://lh3.googleusercontent.com/p/AF1QipPtSntpMsDSGMzKQCaWCcu3SeyQV5Ofcy5ELni6=s1360-w1360-h1020'
 //         }
-//     ]
+//     ],
+//     events: []
 //   },
 //   {
 //     name: 'volleyball',
@@ -87,7 +97,8 @@
 //         description: 'Beach Volleyball at Sunset Rec',
 //         imageUrl: 'https://s3.amazonaws.com/cms.ipressroom.com/173/files/20234/20230507_UCLAMag_1092_resize.jpg'
 //       }
-//     ]
+//     ],
+//     events: []
 //   },
 //   {
 //     name: 'badminton',
@@ -100,7 +111,8 @@
 //         description: 'Badminton at Pardee Gymnasium',
 //         imageUrl: 'https://uclaclubsports.com/images/2015/10/13/IMG_793646.JPG'
 //       }
-//     ]
+//     ],
+//     events: []
 //   },
 //   {
 //     name: 'swimming',
@@ -118,7 +130,8 @@
 //         description: 'Pool at Sunset Canyon Recreation Center',
 //         imageUrl: 'https://recreation.ucla.edu/sites/default/files/styles/resize_3_2/public/2022-03/facilities_familypool_600x400_0.jpg?itok=nREDZAbe'
 //       }
-//     ]
+//     ],
+//     events: []
 //   },
 //   {
 //     name: 'yoga',
@@ -131,7 +144,8 @@
 //         description: 'Yoga at Bruin Fitness Center',
 //         imageUrl: 'https://www.jfak.net/wp-content/uploads/2020/02/Bruin_5.jpg'
 //       }
-//     ]
+//     ],
+//     events: []
 //   },
 //   {
 //     name: 'gym',
@@ -149,7 +163,8 @@
 //         description: 'Work out at John Wooden Center',
 //         imageUrl: 'https://bruinlife.com/wp-content/uploads/2023/06/DSC_4051-1024x682.jpg'
 //       }
-//     ]
+//     ],
+//     events: []
 //   }
 // ];
 

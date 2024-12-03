@@ -1,56 +1,63 @@
 import Activity from "../models/activity.model.js";
 
-export const getActivities = async (req, res) => {
+export const getActivity = async (req, res) => {
     try {
-        const filters = req.query; // Extract query parameters from the request
-        const activities = await Activity.find(filters); // Pass filters directly to the query
+        const name = req.query;
+        const activities = await Activity.find(name);
         res.status(200).json({ success: true, data: activities });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, error: error.message });
     }
-};
+}
 
 export const createActivity = async (req,res) => {
     const activity = req.body;
     if (!activity.name || !activity.type || !activity.image) {
-        return res.status(400).send("Missing required fields")
+        return res.status(400).send("Missing required fields");
     }
     const newActivity = new Activity(activity)
     try {
-        await newActivity.save()
-        res.status(201).json({success: true, data: newActivity})
+        await newActivity.save();
+        res.status(201).json({success: true, data: newActivity});
     } catch (error) {
-        console.log(error)
-        res.status(500).json({success: false, error: error.message})
+        console.log(error);
+        res.status(500).json({success: false, error: error.message});
     }
 }
 
 export const updateActivity = async (req, res) => {
-    const {id} = req.params //brackets it will look to see what variable has the same name
-    const activity = req.body //the actual activity name, type, image
+    const { name } = req.query; 
+    const { eventId, eventData } = req.body; 
     try {
-        const updated = await Activity.findByIdAndUpdate(id, activity, {new: true})
-        if (!updated) {
-            return res.status(404).json({success: false, error: "Activity not found"})
+        const activity = await Activity.findOne({ name });  // Find the activity by name
+        if (!activity) {
+            return res.status(404).json({ success: false, error: 'Activity not found' });
         }
-        res.status(200).json({success: true, data: updated})
+        const eventIndex = activity.events.findIndex(event => event._id.toString() === eventId);
+        if (eventIndex === -1) {
+            activity.events.push(eventData);
+        } else {
+            activity.events[eventIndex].upvotes += 1;
+        }
+        const updatedActivity = await activity.save();
+        res.status(200).json({ success: true, data: updatedActivity });
     } catch (error) {
-        console.log(error)
-        res.status(500).json({success: false, error: error.message})
+        console.error('Error updating activity:', error);
+        res.status(500).json({ success: false, error: error.message });
     }
-}
-
+  };
+  
 export const deleteActivity = async (req, res) => {
-    const {id} = req.params
+    const { name } = req.query; 
     try {
-        const deleted = await Activity.findByIdAndDelete(id)
-        if (!deleted) {
-            return res.status(404).json({success: false, error: "Activity not found"})
+        const deletedActivity = await Activity.findOneAndDelete({ name });
+        if (!deletedActivity) {
+            return res.status(404).json({ success: false, error: 'Activity not found' });
         }
-        res.status(200).json({success: true, data: deleted})
+    res.status(200).json({ success: true, data: deletedActivity });
     } catch (error) {
-        console.log(error)
-        res.status(500).json({success: false, error: error.message})
+        console.error('Error deleting activity:', error);
+        res.status(500).json({ success: false, error: error.message });
     }
 }

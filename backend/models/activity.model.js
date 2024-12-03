@@ -39,6 +39,22 @@ const locationSchema = new Schema({
     }
 });
 
+// Event Schema
+const eventSchema = new Schema({
+    location: {
+        type: String,
+        required: true
+    },
+    time: {
+        type: String,
+        required: true
+    },
+    upvotes: {
+        type: Number,
+        required: true
+    }
+});
+
 // Activity Schema
 const activitySchema = new Schema({
     name: {
@@ -55,7 +71,8 @@ const activitySchema = new Schema({
         required: true
     },
     chatMessages: [chatMessageSchema],
-    locations: [locationSchema]
+    locations: [locationSchema],
+    events: [eventSchema]
 }, {
     timestamps: true
 });
