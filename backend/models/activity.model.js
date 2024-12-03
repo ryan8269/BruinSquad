@@ -50,7 +50,7 @@ const eventSchema = new Schema({
         required: true
     },
     upvotes: {
-        type: Int32,
+        type: Number,
         required: true
     }
 });
