@@ -15,6 +15,8 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useClerk,
+  useUser,
 } from '@clerk/nextjs';
 import './globals.css';
 import {
@@ -26,6 +28,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as styles from './styles.module.css';
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -53,137 +58,98 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   const { yoga } = usesport();
   const { activeRoom, setActiveRoom } = usesport();
 
+  const {signOut} = useClerk();
+  const {user} = useUser();
+
   return (
     <div className="flex w-full">
       {/* Sidebar Navigation */}
-      <div className="w-64 bg-blue-500 text-white p-6 space-y-8 h-full">
+      <div className="w-64 bg-blue-500 text-white space-y-8 h-full">
         {/* Button that will direct us to the main page */}
         <Link href="/">
-          <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold">BruinMatch</h1>
+          <div className="p-6">
+            <div className="flex items-center space-x-2">
+              <h1 className="text-2xl font-bold">BruinMatch</h1>
+            </div>
+            <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
           </div>
-          <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
         </Link>
 
-        <nav className="space-y-4">
+        <nav className="space-y-4 pl-6">
           {/* Once I click on this, direct me to /profile using Link */}
-          <button
-            className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-          >
-            <UserCircleIcon className="h-12 w-12" />
-            <Link href="/profile">Profile</Link>
-          </button>
-          {basketball && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("basketball")}
-            >
-              <Image src={BASKETBALL} alt="Basketball" width={50} height={50} />
-              <span > League of Ballers </span>
-            </Link>
-          )}
+          { basketball ? ChatNavBar({ activity:"basketball", imageSource:BASKETBALL, activeRoom, setActiveRoom}) : null}
 
-          {running && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("running")}
-            >
-              <Image src={RUNNING} alt="Running" width={50} height={50} />
-              <span > Run Forest Run </span>
-            </Link>
-          )}
+          { running ? ChatNavBar({ activity:"running", imageSource:RUNNING, activeRoom, setActiveRoom}) : null}
 
-          {tennis && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("tennis")}
-            >
-              <Image src={TENNIS} alt="Tennis" width={50} height={50} />
-              <span> The Smash Bros </span>
-            </Link>
-          )}
+          {tennis ? ChatNavBar({ activity:"tennis", imageSource:TENNIS, activeRoom, setActiveRoom}) : null}
 
-          {football && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("football")}
-            >
-              <Image src={FOOTBALL} alt="Football" width={50} height={50} />
-              <span> Touchdown Town </span>
-            </Link>
-          )}
+          {football ? ChatNavBar({ activity:"football", imageSource:FOOTBALL, activeRoom, setActiveRoom}) : null}
 
-          {volleyball && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("volleyball")}
-            >
-              <Image src={VOLLEYBALL} alt="Volleyball" width={50} height={50} />
-              <span> Set, Spike, Repeat </span>
-            </Link>
-          )}
+          {volleyball ? ChatNavBar({ activity:"volleyball", imageSource:VOLLEYBALL, activeRoom, setActiveRoom}) : null}
 
-          {badminton && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("badminton")}
-            >
-              <Image src={BADMINTON} alt="Badminton" width={50} height={50} />
-              <span> Badminton Group Chat </span>
-            </Link>
-          )}
+          {badminton ? ChatNavBar({ activity:"badminton", imageSource:BADMINTON, activeRoom, setActiveRoom}) : null}
 
-          {swimming && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("swimming")}
-            >
-              <Image src={SWIMMING} alt="Swimming" width={50} height={50} />
-              <span> The Pool Sharks </span>
-            </Link> 
-          )}
+          {yoga ? ChatNavBar({ activity:"yoga", imageSource:YOGA, activeRoom, setActiveRoom}) : null}
 
-          {yoga && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("yoga")}
-            >
-              <Image src={YOGA} alt="Yoga" width={50} height={50} />
-              <span> Stretch It Daddy </span>
-            </Link>
-          )}
-
-          {gym && (
-            <Link
-              className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
-              onClick={() => setActiveRoom("gym")}
-            >
-              <Image src={GYM} alt="Gym" width={50} height={50} />
-              <span> Gym Bros </span>
-            </Link>
-          )}
-
+          {gym ? ChatNavBar({ activity:"gym", imageSource:GYM, activeRoom, setActiveRoom}) : null}
         </nav>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full"> {/* Add w-full here */}
         {/* Authentication Controls */}
-        <div className="p-4 bg-gray-100 flex justify-end items-center">
+        <div className="p-4 bg-gray-100 flex items-center">
+            <Link
+              className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}
+              href={"/explore"}
+            >
+              <span> Explore </span>
+            </Link>
+          <button className = {`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}>
+            EVENTS
+          </button>
+                
+            <Link
+              className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}
+              href={"/user/chat"}
+            >
+              <span> Chat </span>
+            </Link>
+
           <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+              <button
+                className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 ml-auto`}
+              >
+                <img
+                src={user?.imageUrl} 
+                className="w-10 h-10 rounded-full border border-gray-300"
+                />
+                Profile
+              </button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  className="min-w-[220px] rounded-md bg-white p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
+
+                >
+                  <DropdownMenu.Item>
+                      <button>
+                        <Link href="/profile">Preferences</Link>
+                      </button>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item>
+                    <button onClick={() => signOut()}>
+                      Sign Out
+                    </button>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
           </SignedIn>
         </div>
 
@@ -192,4 +158,43 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       </div>
     </div>
   );
+} 
+
+
+interface ChatNavBarProps {
+  activity: string; 
+  imageSource: any;
+  activeRoom: string | null;
+  setActiveRoom: (room: string) => void;
+}
+
+function ChatNavBar({ activity, imageSource, activeRoom, setActiveRoom}: ChatNavBarProps){
+  return(
+  <Link
+    className= {activeRoom == activity
+      ? `@apply will-change-[opacity,transform] animate-slideLeftAndFade w-full text-black text-left flex items-center space-x-3 p-2 rounded-l bg-white`
+      : `w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`
+    }    
+    href={"/user/chat"}
+    onClick={() => setActiveRoom(`${activity}`)}
+    >
+    <Image src={imageSource} alt={`${activity}`} width={50} height={50} />
+    <span> {sportsToChatName[`${activity}`]} </span>
+    </Link>);
+}
+
+interface sportToChat {
+  [key: string]: string;
+}
+
+export const sportsToChatName: sportToChat = {
+  "basketball" : "League of Ballers",
+  "running" : "Run Forest Run",
+  "tennis" : "The Smash Bros",
+  "football" : "Touchdown Town",
+  "volleyball" : "Set, Spike, Repeat",
+  "badminton" : "Badminton Group Chat",
+  "swimming" : "The Pool Sharks",
+  "yoga" : "Stretch It Daddy",
+  "gym" : "Gym Bros",
 }
