@@ -174,17 +174,16 @@ interface ChatNavBarProps {
 
 function ChatNavBar({ activity, imageSource, activeRoom, setActiveRoom}: ChatNavBarProps){
   return(
-  <Link
+  <button
     className= {activeRoom == activity
       ? `@apply will-change-[opacity,transform] animate-slideLeftAndFade w-full text-black text-left flex items-center space-x-3 p-2 rounded-l bg-white`
       : `w-full text-left flex items-center space-x-3 p-2 rounded-l hover:bg-blue-600`
     }    
-    href={"/user/chat"}
     onClick={() => setActiveRoom(`${activity}`)}
     >
     <Image src={imageSource} alt={`${activity}`} width={50} height={50} />
     <span> {sportsToChatName[`${activity}`]} </span>
-    </Link>);
+    </button>);
 }
 
 interface sportToChat {
