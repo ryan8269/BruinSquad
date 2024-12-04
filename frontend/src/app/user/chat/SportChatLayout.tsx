@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { SportProvider, usesport } from "@/app/SportContent";
+import {sportsToChatName} from '../../layout'
 
 const socket = io("http://localhost:3001");
 
@@ -224,7 +225,7 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
                 {/* Room header */}
                 <div className="p-4 border-b bg-gradient-to-r from-blue-500 to-blue-700 text-white">
                 <h2 className="font-semibold text-xl">
-                    {activeRoom.charAt(0).toUpperCase() + activeRoom.slice(1)} Chat
+                    {(activeRoom in sportsToChatName)? sportsToChatName[activeRoom]:activeRoom.charAt(0).toUpperCase() + activeRoom.slice(1) + ' Chat'}
                 </h2>
                 <div className="text-sm opacity-75">
                     Active Users: {activeUsers[activeRoom]?.length || 0}
