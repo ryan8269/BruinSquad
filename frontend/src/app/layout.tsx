@@ -75,7 +75,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
           </div>
         </Link>
 
-        <nav className="space-y-4 pl-6">
+        <nav className="">
           {/* Once I click on this, direct me to /profile using Link */}
           { basketball ? ChatNavBar({ activity:"basketball", imageSource:BASKETBALL, activeRoom, setActiveRoom}) : null}
 
@@ -173,7 +173,7 @@ function ChatNavBar({ activity, imageSource, activeRoom, setActiveRoom}: ChatNav
   <Link
     className= {activeRoom == activity
       ? `@apply will-change-[opacity,transform] animate-slideLeftAndFade w-full text-black text-left flex items-center space-x-3 p-2 rounded-l bg-white`
-      : `w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`
+      : `w-full text-left flex items-center space-x-3 p-2 rounded-l hover:bg-blue-600`
     }    
     href={"/user/chat"}
     onClick={() => setActiveRoom(`${activity}`)}
