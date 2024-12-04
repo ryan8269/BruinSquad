@@ -76,7 +76,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
           {basketball && (
             <Link
               className="w-full text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600"
-              href={"/user/chat"}
+              href={"/user/events"} //TO DO Set this back to chat
               onClick={() => setActiveRoom("basketball")}
             >
               <Image src={BASKETBALL} alt="Basketball" width={50} height={50} />
