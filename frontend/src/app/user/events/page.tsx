@@ -117,7 +117,7 @@ export default function ActivityEventsLayout() {
     }, [activeRoom]);
 
     return (
-        <div className="p-8 bg-gray-100 min-h-screen">
+        <div className="p-8 bg-gray-100 min-h-screen rounded-lg">
             <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500 text-center mb-8">
                 Activity Events
             </h1>

@@ -49,7 +49,7 @@ export default function ActivityLocationsLayout() {
     }, [activeRoom]);
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
+        <div className="p-6 bg-gray-100 min-h-screen  rounded-lg">
             <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 text-center mb-8">
                 Explore Locations
             </h1>
