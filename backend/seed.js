@@ -21,9 +21,9 @@ const activities = [
             image: 'https://images.sidearmdev.com/resize?url=https%3A%2F%2Fdxbhsrqyrr690.cloudfront.net%2Fsidearm.nextgen.sites%2Fuclabruins.com%2Fimages%2F2016%2F6%2F7%2FWoodenCenter_WVB_110923_0025.jpg&height=300&type=webp'
         },
         {
-        name: 'Hitch Courts',
-        description: 'Main outdoor basketball courts at UCLA',
-        image: 'https://recreation.ucla.edu/sites/default/files/styles/header_image/public/2023-06/DSC02070.jpg?itok=tWkpB5Wt'
+            name: 'Hitch Courts',
+            description: 'Main outdoor basketball courts at UCLA',
+            image: 'https://recreation.ucla.edu/sites/default/files/styles/header_image/public/2023-06/DSC02070.jpg?itok=tWkpB5Wt'
         }
     ],
     events: [
@@ -46,6 +46,11 @@ const activities = [
         name: 'Drake Stadium',
         description: 'Track and field facility at UCLA',
         image: 'https://images.sidearmdev.com/resize?url=https%3A%2F%2Fdxbhsrqyrr690.cloudfront.net%2Fsidearm.nextgen.sites%2Fuclabruins.com%2Fimages%2F2016%2F6%2F15%2F140129_ATH_057.jpg&height=300&type=webp'
+      },
+      {
+        name: 'UCLA Running Routes',
+        description: 'Running routes around UCLA',
+        image: 'https://cdn.pacer.cc/route/screenshot/9q5cb_127.png'
       }
     ],
     events: []
@@ -60,6 +65,11 @@ const activities = [
           name: 'Intramural Fields',
           description: 'Main outdoor field at UCLA',
           image: 'https://uclaclubsports.com/images/2022/3/24/IMG_1989.JPG'
+      },
+      {
+        name: 'Holmby Park',
+        description: 'Spacious park near UCLA',
+        image: 'https://www.christophechoo.com/wp-content/uploads/2018/06/34123062_10156369402418609_4942764964008951808_o.jpg'
       }
     ],
     events: []
@@ -73,12 +83,12 @@ const activities = [
         {
             name: 'Sunset Tennis Courts',
             description: 'Tennis Courts on the Hill',
-            image: 'https://lh3.googleusercontent.com/p/AF1QipOQVwEqmr7UQmTR0bmuq1MpX4ZaMNJdTMTgl8PP=s1360-w1360-h1020'
+            image: 'https://pbs.twimg.com/media/C6qakWnVsAA2r3o.jpg:large'
         },
         {
             name: 'Los Angeles Tennis Center',
             description: 'Historic Tennis Facility',
-            image: 'https://lh3.googleusercontent.com/p/AF1QipPtSntpMsDSGMzKQCaWCcu3SeyQV5Ofcy5ELni6=s1360-w1360-h1020'
+            image: 'https://images.sidearmdev.com/resize?url=https%3A%2F%2Fdxbhsrqyrr690.cloudfront.net%2Fsidearm.nextgen.sites%2Fuclabruins.com%2Fimages%2F2019%2F1%2F10%2FIMG_0883.jpeg&height=300&type=webp'
         }
     ],
     events: []
@@ -112,6 +122,11 @@ const activities = [
         name: 'John Wooden Center',
         description: 'Badminton at Pardee Gymnasium',
         image: 'https://uclaclubsports.com/images/2015/10/13/IMG_793646.JPG'
+      },
+      {
+        name: 'Holmby Park',
+        description: 'Spacious park near UCLA',
+        image: 'https://www.christophechoo.com/wp-content/uploads/2018/06/34123062_10156369402418609_4942764964008951808_o.jpg'
       }
     ],
     events: []
@@ -145,6 +160,11 @@ const activities = [
         name: 'Bruin Fitness Center',
         description: 'Yoga at Bruin Fitness Center',
         image: 'https://www.jfak.net/wp-content/uploads/2020/02/Bruin_5.jpg'
+      },
+      {
+        name: 'Holmby Park',
+        description: 'Spacious park near UCLA',
+        image: 'https://www.christophechoo.com/wp-content/uploads/2018/06/34123062_10156369402418609_4942764964008951808_o.jpg'
       }
     ],
     events: []
