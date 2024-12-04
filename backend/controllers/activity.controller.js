@@ -36,7 +36,7 @@ export const updateActivity = async (req, res) => {
         }
         const eventIndex = activity.events.findIndex(event => event._id.toString() === eventId);
         if (eventIndex === -1) {
-            activity.events.push(eventData);
+            activity.events.unshift(eventData);
         } else {
             activity.events[eventIndex].upvotes += 1;
         }

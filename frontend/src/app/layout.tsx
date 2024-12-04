@@ -101,13 +101,17 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         <div className="p-4 bg-gray-100 flex items-center">
             <Link
               className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}
-              href={"/explore"}
+              href={"/user/explore"}
             >
               <span> Explore </span>
             </Link>
-          <button className = {`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}>
-            EVENTS
-          </button>
+
+            <Link
+              className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}
+              href={"/user/events"}
+            >
+              <span> Events </span>
+            </Link>
                 
             <Link
               className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}

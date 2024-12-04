@@ -33,7 +33,7 @@ const locationSchema = new Schema({
         type: String,
         required: true
     },
-    imageUrl: {
+    image: {
         type: String,
         required: true
     }
@@ -41,6 +41,14 @@ const locationSchema = new Schema({
 
 // Event Schema
 const eventSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
     location: {
         type: String,
         required: true
