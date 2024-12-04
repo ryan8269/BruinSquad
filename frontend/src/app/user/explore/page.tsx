@@ -48,11 +48,12 @@ export default function ActivityLocationsLayout() {
         }
     }, [activeRoom]);
 
-    if (locations && locations.length > 0) console.log(locations[0].image);
-
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
-            <h1 className="text-3xl font-bold text-center mb-6">Explore Locations</h1>
+            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 text-center mb-8">
+                Explore Locations
+            </h1>
+
 
             {isLoading && (
                 <div className="flex justify-center items-center">
@@ -70,7 +71,7 @@ export default function ActivityLocationsLayout() {
                             <img
                                 src={location.image}
                                 alt={location.name}
-                                className="w-full h-48 object-cover"
+                                className="w-full h-175 object-cover"
                             />
                             <div className="p-4">
                                 <h3 className="text-lg font-semibold">{location.name}</h3>
