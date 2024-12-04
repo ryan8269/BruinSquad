@@ -24,7 +24,13 @@ const activities = [
             name: 'Hitch Courts',
             description: 'Main outdoor basketball courts at UCLA',
             image: 'https://recreation.ucla.edu/sites/default/files/styles/header_image/public/2023-06/DSC02070.jpg?itok=tWkpB5Wt'
+        },
+        {
+            name: 'Mo Ostin Basketball Center',
+            description: 'Mo Ostin south campus courts at UCLA',
+            image: 'https://images.sidearmdev.com/resize?url=https%3A%2F%2Fdxbhsrqyrr690.cloudfront.net%2Fsidearm.nextgen.sites%2Fuclabruins.com%2Fimages%2F2021%2F9%2F23%2F171024_ATH_0044.jpg&height=1100&type=webp'
         }
+        
     ],
     events: [
         {
@@ -51,6 +57,11 @@ const activities = [
         name: 'UCLA Running Routes',
         description: 'Running routes around UCLA',
         image: 'https://cdn.pacer.cc/route/screenshot/9q5cb_127.png'
+      },
+      {
+        name: 'BFIT UCLA',
+        description: 'Indoor running for a Chilly day',
+        image: 'http://westwoodenabler.com/wp-content/uploads/2015/10/DSC_7382-678x381.jpg'
       }
     ],
     events: []
@@ -70,6 +81,11 @@ const activities = [
         name: 'Holmby Park',
         description: 'Spacious park near UCLA',
         image: 'https://www.christophechoo.com/wp-content/uploads/2018/06/34123062_10156369402418609_4942764964008951808_o.jpg'
+      },
+      {
+        name: 'UCLA Drake Stadium',
+        description: 'Best place to play organized Football',
+        image: 'https://c7.alamy.com/comp/2R8EGD7/a-general-overall-aerial-view-of-drake-stadium-on-the-campus-of-ucla-saturday-may-27-2023-in-los-angeles-kirby-lee-via-ap-2R8EGD7.jpg'
       }
     ],
     events: []
@@ -89,6 +105,11 @@ const activities = [
             name: 'Los Angeles Tennis Center',
             description: 'Historic Tennis Facility',
             image: 'https://images.sidearmdev.com/resize?url=https%3A%2F%2Fdxbhsrqyrr690.cloudfront.net%2Fsidearm.nextgen.sites%2Fuclabruins.com%2Fimages%2F2019%2F1%2F10%2FIMG_0883.jpeg&height=300&type=webp'
+        },
+        {
+            name: 'Sycamore Tennis Courts',
+            description: 'Best place to reserve if you live near Olympic or Centennial',
+            image: 'http://uclafwc.bol.ucla.edu/section/tennis/tennis2.jpg'
         }
     ],
     events: []
@@ -110,8 +131,8 @@ const activities = [
         image: 'https://s3.amazonaws.com/cms.ipressroom.com/173/files/20234/20230507_UCLAMag_1092_resize.jpg'
       },
       {
-        name: "Mapes Beach",
-        description: 'Beach volleyball at Mapes Beach',
+        name: 'Mapes Beach',
+        description: 'Play volleyball at Mapes Beach',
         image: 'https://images.sidearmdev.com/resize?url=https%3A%2F%2Fdxbhsrqyrr690.cloudfront.net%2Fsidearm.nextgen.sites%2Fuclabruins.com%2Fimages%2F2021%2F4%2F3%2FSparks_Newberry_04032021_UCLAvsLSU_RT6850.jpg&height=300&type=webp'
       }
     ],
