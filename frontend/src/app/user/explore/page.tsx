@@ -25,7 +25,6 @@ export default function ActivityLocationsLayout() {
     const fetchActivity = async (room: string): Promise<void> => {
         try {
             setIsLoading(true);
-            console.log('Fetching activity for sport:', room);
             const response = await fetch(`http://localhost:4000/api/activity?name=${room}`);
             if (!response.ok) throw new Error('Failed to fetch activity');
             const data = await response.json();
@@ -49,22 +48,43 @@ export default function ActivityLocationsLayout() {
         }
     }, [activeRoom]);
 
+    if (locations && locations.length > 0) console.log(locations[0].image);
+
     return (
-        <div>
-            <h1>Activity Locations</h1>
-            {isLoading && <p>Loading...</p>}
+        <div className="p-6 bg-gray-100 min-h-screen">
+            <h1 className="text-3xl font-bold text-center mb-6">Explore Locations</h1>
+
+            {isLoading && (
+                <div className="flex justify-center items-center">
+                    <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            )}
+
             {!isLoading && locations && locations.length > 0 ? (
-                <ul>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {locations.map((location) => (
-                        <li key={location._id}>
-                            <h3>{location.name}</h3>
-                            <p>{location.description}</p>
-                            <img src={location.image} alt={location.name} style={{ width: "100px" }} />
-                        </li>
+                        <div
+                            key={location._id}
+                            className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105"
+                        >
+                            <img
+                                src={location.image}
+                                alt={location.name}
+                                className="w-full h-48 object-cover"
+                            />
+                            <div className="p-4">
+                                <h3 className="text-lg font-semibold">{location.name}</h3>
+                                <p className="text-sm text-gray-600 mt-2">{location.description}</p>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+                </div>
             ) : (
-                !isLoading && <p>No locations available for this activity.</p>
+                !isLoading && (
+                    <p className="text-center text-gray-500 mt-10">
+                        No locations available for this activity.
+                    </p>
+                )
             )}
         </div>
     );
