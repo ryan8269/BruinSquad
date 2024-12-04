@@ -91,6 +91,8 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 
           {yoga ? ChatNavBar({ activity:"yoga", imageSource:YOGA, activeRoom, setActiveRoom}) : null}
 
+          {swimming ? ChatNavBar({ activity:"swimming", imageSource:SWIMMING, activeRoom, setActiveRoom}) : null}
+
           {gym ? ChatNavBar({ activity:"gym", imageSource:GYM, activeRoom, setActiveRoom}) : null}
         </nav>
       </div>
