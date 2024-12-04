@@ -13,7 +13,7 @@ export const getActivity = async (req, res) => {
 
 export const createActivity = async (req,res) => {
     const activity = req.body;
-    if (!activity.name || !activity.type || !activity.image || !activity.title || !activity.description) {
+    if (!activity.name || !activity.type || !activity.image) {
         return res.status(400).send("Missing required fields");
     }
     const newActivity = new Activity(activity)
