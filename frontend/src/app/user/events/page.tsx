@@ -117,8 +117,8 @@ export default function ActivityEventsLayout() {
     }, [activeRoom]);
 
     return (
-        <div className="p-8 bg-gray-100 min-h-screen">
-            <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500 text-center mb-8">
+        <div className="p-8 bg-gray-100 min-h-screen rounded-lg">
+            <h1 className="pb-4 text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500 text-center mb-8">
                 Activity Events
             </h1>
 
@@ -131,7 +131,7 @@ export default function ActivityEventsLayout() {
                     {events.map((event) => (
                         <div
                             key={event._id}
-                            className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 p-6"
+                            className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 p-6 animate-slideLeftAndFade"
                         >
                             <div className="flex flex-col">
                                 <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>

@@ -30,6 +30,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as styles from './styles.module.css';
+import { useEffect } from 'react';
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -100,53 +101,36 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full"> {/* Add w-full here */}
         {/* Authentication Controls */}
-        <div className="p-4 bg-gray-100 flex items-center">
-            <Link
-              className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}
-              href={"/user/explore"}
-            >
-              <span> Explore </span>
-            </Link>
-
-            <Link
-              className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}
-              href={"/user/events"}
-            >
-              <span> Events </span>
-            </Link>
-                
-            <Link
-              className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600`}
-              href={"/user/chat"}
-            >
-              <span> Chat </span>
-            </Link>
-
+        <div className="bg-yellow-400 flex min-h-[60px]">
+          <div className="grid grid-cols-10 w-full h-full">
+              <TopNavBar button_href='/user/explore' description="Explore" />
+              <TopNavBar button_href='/user/events' description="Events" />
+              <TopNavBar button_href='/user/chat' description="Chat" />
+          </div>
           <SignedOut>
+            <div className="min-w-[100px] min-h-[60px] flex ml-auto">
             <SignInButton />
+            </div>
           </SignedOut>
           <SignedIn>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
               <button
-                className={`text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600 ml-auto`}
+                className={`min-w-[100px] min-h-[60px] text-left flex items-center space-x-2 px-4 py-2 hover:bg-blue-600 ml-auto`}
               >
-                <img
-                src={user?.imageUrl} 
-                className="w-10 h-10 rounded-full border border-gray-300"
-                />
-                Profile
+                  <span>Profile</span>
+                  <img
+                  src={user?.imageUrl} 
+                  className="w-10 h-10 rounded-full border border-gray-300"
+                  />
               </button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>
                 <DropdownMenu.Content
-                  className="min-w-[220px] rounded-md bg-white p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
-
+                  className="min-w-[100px] space-y-2 bg-white px-4 py-2 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
                 >
                   <DropdownMenu.Item>
-                      <button>
-                        <Link href="/profile">Preferences</Link>
-                      </button>
+                      <Link href="/profile">Preferences</Link>
                   </DropdownMenu.Item>
                   <DropdownMenu.Item>
                     <button onClick={() => signOut()}>
@@ -158,13 +142,28 @@ function MainLayout({ children }: { children: React.ReactNode }) {
             </DropdownMenu.Root>
           </SignedIn>
         </div>
-
         {/* Page Content */}
         <main className="p-6 flex-grow w-full">{children}</main> {/* Add w-full */}
       </div>
     </div>
   );
 } 
+
+interface TopNavBarProps {
+  button_href:string
+  description:string
+}
+
+function TopNavBar({button_href,description}: TopNavBarProps){
+  return(
+    <Link
+      className={`h-full justify-center text-left flex items-center space-x-3 p-2 hover:bg-blue-600 transition delay-100 hover:scale-110`}
+      href={button_href}
+    >
+      <span> {description} </span>
+    </Link>
+  )
+}
 
 
 interface ChatNavBarProps {
@@ -178,7 +177,7 @@ function ChatNavBar({ activity, imageSource, activeRoom, setActiveRoom}: ChatNav
   return(
   <button
     className= {activeRoom == activity
-      ? `@apply will-change-[opacity,transform] animate-slideLeftAndFade w-full text-black text-left flex items-center space-x-3 p-2 rounded-l bg-white`
+      ? `will-change-[opacity,transform] animate-slideLeftAndFade w-full text-black text-left flex items-center space-x-3 p-2 rounded-l bg-white`
       : `w-full text-left flex items-center space-x-3 p-2 rounded-l hover:bg-blue-600`
     }    
     onClick={() => setActiveRoom(`${activity}`)}
@@ -200,6 +199,6 @@ export const sportsToChatName: sportToChat = {
   "volleyball" : "Set, Spike, Repeat",
   "badminton" : "Badminton Group Chat",
   "swimming" : "The Pool Sharks",
-  "yoga" : "Stretch It Daddy",
+  "yoga" : "Mat Chat Crew",
   "gym" : "Gym Bros",
 }
