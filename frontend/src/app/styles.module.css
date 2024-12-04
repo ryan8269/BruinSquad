@@ -1,5 +1,0 @@
-
-
-.top_navbar{
-    @apply text-left flex items-center space-x-3 p-2 rounded hover:bg-blue-600;
-}
