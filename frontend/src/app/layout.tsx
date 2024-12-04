@@ -116,7 +116,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
               <button
-                className={`min-w-[100px] min-h-[60px] text-left flex items-center space-x-2 px-4 py-2 hover:bg-blue-600 ml-auto `}
+                className={`min-w-[100px] min-h-[60px] text-left flex items-center space-x-2 px-4 py-2 hover:bg-blue-600 ml-auto`}
               >
                   <span>Profile</span>
                   <img
@@ -157,7 +157,7 @@ interface TopNavBarProps {
 function TopNavBar({button_href,description}: TopNavBarProps){
   return(
     <Link
-      className={`h-full justify-center text-left flex items-center space-x-3 p-2 hover:bg-blue-600`}
+      className={`h-full justify-center text-left flex items-center space-x-3 p-2 hover:bg-blue-600 transition delay-100 hover:scale-110`}
       href={button_href}
     >
       <span> {description} </span>
@@ -199,6 +199,6 @@ export const sportsToChatName: sportToChat = {
   "volleyball" : "Set, Spike, Repeat",
   "badminton" : "Badminton Group Chat",
   "swimming" : "The Pool Sharks",
-  "yoga" : "Stretch It Daddy",
+  "yoga" : "Mat Chat Crew",
   "gym" : "Gym Bros",
 }

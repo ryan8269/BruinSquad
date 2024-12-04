@@ -131,7 +131,7 @@ export default function ActivityEventsLayout() {
                     {events.map((event) => (
                         <div
                             key={event._id}
-                            className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 p-6"
+                            className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 p-6 animate-slideLeftAndFade"
                         >
                             <div className="flex flex-col">
                                 <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
