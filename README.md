@@ -26,17 +26,16 @@ bruinsquads/
 1. Clone the repository:
 ```bash
 git clone https://github.com/ryan8269/BruinSquad.git
-cd bruinsquads
+cd BruinSquad
 ```
 
 2. Install dependencies for both frontend and backend:
 ```bash
-# Install backend dependencies
-cd backend
+# Install backend dependencies, the package.json for it is in root
 npm install
 
 # Install frontend dependencies
-cd ../frontend
+cd frontend
 npm install
 ```
 
