@@ -41,8 +41,8 @@ npm install
 
 ## Environment Configuration
 
-### Backend (.env)
-Create a `.env` file in the `backend` directory with the following variables:
+### root (.env)
+Create a `.env` file in the `root` directory with the following variables:
 ```
 PORT=4000
 MONGODB_URI=your_mongodb_connection_string
