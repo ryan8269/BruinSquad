@@ -100,73 +100,16 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col w-full"> {/* Add w-full here */}
-        {/* Authentication Controls */}
+      <div className="flex-1 flex flex-col w-full">
+        {/* Navbar */}
         <ModernNavBar user={user} />
-        {/* <div className="bg-yellow-400 flex min-h-[60px]">
-          <div className="grid grid-cols-10 w-full h-full">
-              <TopNavBar button_href='/user/explore' description="Explore" />
-              <TopNavBar button_href='/user/events' description="Events" />
-              <TopNavBar button_href='/user/chat' description="Chat" />
-          </div>
-          <SignedOut>
-            <div className="min-w-[100px] min-h-[60px] flex ml-auto">
-            <SignInButton />
-            </div>
-          </SignedOut>
-          <SignedIn>
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
-              <button
-                className={`min-w-[100px] min-h-[60px] text-left flex items-center space-x-2 px-4 py-2 hover:bg-blue-600 ml-auto`}
-              >
-                  <span>Profile</span>
-                  <img
-                  src={user?.imageUrl} 
-                  className="w-10 h-10 rounded-full border border-gray-300"
-                  />
-              </button>
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content
-                  className="min-w-[100px] space-y-2 bg-white px-4 py-2 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
-                >
-                  <DropdownMenu.Item>
-                      <Link href="/profile">Preferences</Link>
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item>
-                    <button onClick={() => signOut()}>
-                      Sign Out
-                    </button>
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
-          </SignedIn>
-        </div> */}
+        
         {/* Page Content */}
-        <main className="p-6 flex-grow w-full">{children}</main> {/* Add w-full */}
+        <main className="p-6 flex-grow w-full">{children}</main>
       </div>
     </div>
   );
 } 
-
-interface TopNavBarProps {
-  button_href:string
-  description:string
-}
-
-function TopNavBar({button_href,description}: TopNavBarProps){
-  return(
-    <Link
-      className={`h-full justify-center text-left flex items-center space-x-3 p-2 hover:bg-blue-600 transition delay-100 hover:scale-110`}
-      href={button_href}
-    >
-      <span> {description} </span>
-    </Link>
-  )
-}
-
 
 interface ChatNavBarProps {
   activity: string; 

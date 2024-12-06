@@ -125,14 +125,13 @@ export default function ProfilePage() {
       </div>
     );
   }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex justify-center items-center p-4">
-      <div className="w-full max-w-6xl bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden">
+    <div className="min-h-screen bg-white flex justify-center items-center p-4">
+      <div className="w-full max-w-6xl bg-white shadow-2xl rounded-2xl">
         <form onSubmit={handleSubmit} className="p-8">
           {/* Profile Header */}
           <div className="mb-12 text-center">
-            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2">
+            <h1 className="pb-4 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-800 mb-2">
               {mongoUser.name}
             </h1>
             <p className="text-lg text-gray-600">{mongoUser.email}</p>
@@ -155,6 +154,7 @@ export default function ProfilePage() {
                       : 'bg-gray-100/50 border-2 border-gray-300/50 hover:bg-gray-200/70'
                     }
                     transform hover:-translate-y-2 hover:scale-105
+                    shadow-md hover:shadow-lg
                   `}
                 >
                   <span className="text-lg font-semibold mb-2 text-gray-700 group-hover:text-blue-800 transition">

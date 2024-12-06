@@ -215,9 +215,6 @@ export default function SportChatLayout({ mongoUser }: SportChatLayoutProps) {
     return (
         <div className="flex h-screen flex-col gap-4 p-4">
             {/* Sports sidebar */}
-            {/* <div className="w-48 space-y-2">
-                {SPORTS.map((sport) => renderSportButton(sport))}
-            </div> */}
 
             {/* Chat area */}
             {activeRoom ? (
