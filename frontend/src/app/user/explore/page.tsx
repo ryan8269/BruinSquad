@@ -64,6 +64,7 @@ export default function ActivityLocationsLayout() {
             {!isLoading && locations && locations.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {locations.map((location) => (
+                        //Maps location to appropiate card
                         <Dialog.Root key={location._id}>
                             <Dialog.Trigger asChild>
                                 <button>
