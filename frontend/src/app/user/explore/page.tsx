@@ -64,12 +64,10 @@ export default function ActivityLocationsLayout() {
             {!isLoading && locations && locations.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {locations.map((location) => (
-                        <>
-                        <Dialog.Root>
+                        <Dialog.Root key={location._id}>
                             <Dialog.Trigger asChild>
                                 <button>
                                     <div
-                                        key={location._id}
                                         className="bg-white backdrop-blur-lg bg-opacity-80 rounded-xl shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden animate-slideLeftAndFade"
                                     >
                                         <img
@@ -87,7 +85,7 @@ export default function ActivityLocationsLayout() {
                             <Dialog.Portal>
                                 <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50" />
                                 <Dialog.Content
-                                    className="fixed top-1/2 left-1/2 w-[90vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg space-y-4"
+                                    className="fixed top-1/2 left-1/2 w-[90vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg space-y-4 data-[state=open]:animate-dialogContentAppear"
                                 >
                                     <Dialog.Title className="text-lg font-semibold">{location.name}</Dialog.Title>
                                     <img
@@ -104,7 +102,6 @@ export default function ActivityLocationsLayout() {
                                 </Dialog.Content>
                                 </Dialog.Portal>
                         </Dialog.Root>
-                        </>
                     ))}
                 </div>
             ) : (

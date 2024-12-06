@@ -132,7 +132,7 @@ export default function ProfilePage() {
         <form onSubmit={handleSubmit} className="p-8">
           {/* Profile Header */}
           <div className="mb-12 text-center">
-            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2">
+            <h1 className="pb-4 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2">
               {mongoUser.name}
             </h1>
             <p className="text-lg text-gray-600">{mongoUser.email}</p>

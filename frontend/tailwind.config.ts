@@ -77,6 +77,13 @@ export default {
 				'0%': { transform: 'scale(0)', opacity: '0' },
           		'100%': { transform: 'scale(1)', opacity: '1'  }
 			},
+			dialogContentAppear: {
+				from: {
+					opacity: "0",
+					transform: "translate(-50%, -30%)",
+				},
+				to: { opacity: "1", transform: "translate(-50%, -50%)" },
+			},
 		},
 		animation: {
 			slideUpAndFade: 'slideUpAndFade 0.4s ease-out',
@@ -84,6 +91,7 @@ export default {
 			slideLeftAndFade: 'slideLeftAndFade 0.4s ease-out',
 			slideRightAndFade: 'slideRightAndFade 0.4s ease-out',
 			expandAndFade: 'expandAndFade 0.4s ease-out',
+			dialogContentAppear: "dialogContentAppear 0.3s ease-out"
 		},
   	}
   },
