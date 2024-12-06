@@ -49,33 +49,32 @@ export default function ActivityLocationsLayout() {
     }, [activeRoom]);
 
     return (
-        <div className="p-8 bg-gray-100 min-h-screen rounded-lg">
+        <div className="p-8 bg-gray-50 min-h-screen rounded-xl shadow-lg">
             <h1 className="pb-4 text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 text-center mb-8">
                 Explore Locations
             </h1>
 
-
             {isLoading && (
                 <div className="flex justify-center items-center">
-                    <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                 </div>
             )}
 
             {!isLoading && locations && locations.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {locations.map((location) => (
                         <div
                             key={location._id}
-                            className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 animate-slideLeftAndFade"
+                            className="bg-white backdrop-blur-lg bg-opacity-80 rounded-xl shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden"
                         >
                             <img
                                 src={location.image}
                                 alt={location.name}
-                                className="w-full h-175 object-cover"
+                                className="w-full h-56 object-cover"
                             />
-                            <div className="p-4">
-                                <h3 className="text-lg font-semibold">{location.name}</h3>
-                                <p className="text-sm text-gray-600 mt-2">{location.description}</p>
+                            <div className="p-6">
+                                <h3 className="text-xl font-semibold text-gray-900">{location.name}</h3>
+                                <p className="text-sm text-gray-700 mt-2">{location.description}</p>
                             </div>
                         </div>
                     ))}

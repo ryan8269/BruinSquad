@@ -31,6 +31,7 @@ import Image from 'next/image';
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as styles from './styles.module.css';
 import { useEffect } from 'react';
+import ModernNavBar from './ModernNavBar';
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -70,7 +71,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         <Link href="/">
           <div className="p-6">
             <div className="flex items-center space-x-2">
-              <h1 className="text-2xl font-bold">BruinMatch</h1>
+              <h1 className="text-2xl font-bold">BruinSquad</h1>
             </div>
             <p className="text-sm text-blue-200 mt-2">Connect with Bruins</p>
           </div>
@@ -101,7 +102,8 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full"> {/* Add w-full here */}
         {/* Authentication Controls */}
-        <div className="bg-yellow-400 flex min-h-[60px]">
+        <ModernNavBar user={user} />
+        {/* <div className="bg-yellow-400 flex min-h-[60px]">
           <div className="grid grid-cols-10 w-full h-full">
               <TopNavBar button_href='/user/explore' description="Explore" />
               <TopNavBar button_href='/user/events' description="Events" />
@@ -141,7 +143,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
           </SignedIn>
-        </div>
+        </div> */}
         {/* Page Content */}
         <main className="p-6 flex-grow w-full">{children}</main> {/* Add w-full */}
       </div>
