@@ -145,28 +145,39 @@ export default function ActivityEventsLayout() {
                                     <strong>Description:</strong> {event.description}
                                 </p>
                                 <div className="flex justify-between items-center mt-4">
-                                    <button
-                                        className="flex items-center text-blue-600 hover:text-blue-800 text-xl"
-                                        onClick={() => handleUpvote(event._id)}
+                                <button
+                                    className="flex items-center 
+                                        text-yellow-600 
+                                        hover:text-orange-700 
+                                        hover:bg-yellow-100/50 
+                                        px-2 py-1 
+                                        rounded-full 
+                                        transition-all 
+                                        duration-300 
+                                        group"
+                                    onClick={() => handleUpvote(event._id)}
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                            className="w-6 h-6 mr-2"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M10 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1z"
-                                                clipRule="evenodd"
-                                            />
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="w-6 h-6 mr-2 
+                                        transition-transform 
+                                        duration-300 
+                                        group-hover:scale-110 
+                                        group-hover:rotate-6"
+                                    >
+                                        <path 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-3.112c.981-.595 2.626-.72 3.534.297.896 1.024 1.2 2.401.804 3.731" 
+                                        />
+                                    </svg>
+                                    <span className="font-semibold group-hover:scale-105 transition-transform duration-300">
                                         {event.upvotes}
+                                    </span>
                                     </button>
                                 </div>
                             </div>
@@ -179,21 +190,34 @@ export default function ActivityEventsLayout() {
 
             {/* Add Event Button */}
             <button
-                className="fixed bottom-8 right-8 bg-blue-600 text-white p-5 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-                onClick={() => setIsModalOpen(true)}
+            className="fixed bottom-8 right-8 
+                bg-gradient-to-br from-yellow-400 to-yellow-600 
+                text-white 
+                p-4 
+                rounded-full 
+                shadow-xl 
+                hover:shadow-2xl 
+                transform hover:-translate-y-1 
+                transition-all 
+                duration-300 
+                flex items-center justify-center 
+                group"
+            onClick={() => setIsModalOpen(true)}
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-8 h-8"
-                >
-                    <path
-                        fillRule="evenodd"
-                        d="M10 3a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H4a1 1 0 110-2h6V4a1 1 0 011-1z"
-                        clipRule="evenodd"
-                    />
-                </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                className="w-8 h-8 
+                transition-transform 
+                duration-300 
+                group-hover:rotate-90"
+            >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
             </button>
 
             {/* Modal for Creating Event */}

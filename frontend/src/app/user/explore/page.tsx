@@ -83,9 +83,9 @@ export default function ActivityLocationsLayout() {
                                 </button>
                             </Dialog.Trigger>
                             <Dialog.Portal>
-                                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50" />
+                                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-20" />
                                 <Dialog.Content
-                                    className="fixed top-1/2 left-1/2 w-[90vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg space-y-4 data-[state=open]:animate-dialogContentAppear"
+                                    className="fixed z-30 top-1/2 left-1/2 w-[90vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg space-y-4 data-[state=open]:animate-dialogContentAppear"
                                 >
                                     <Dialog.Title className="text-lg font-semibold">{location.name}</Dialog.Title>
                                     <img

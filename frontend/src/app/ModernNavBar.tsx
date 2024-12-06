@@ -16,7 +16,7 @@ const NavButton = ({ href, children }: { href: string, children: React.ReactNode
     variant="ghost" 
     className="text-foreground hover:bg-yellow-100 
     transition-colors duration-200 
-    px-4 py-2 rounded-full"
+    px-4 py-2 rounded-full hover:underline"
     asChild
   >
     <Link href={href}>{children}</Link>
@@ -27,7 +27,7 @@ export default function UCLANavBar() {
   const { user } = useUser();
 
   return (
-    <nav className="sticky top-0 z-50 
+    <nav className="sticky top-0 z-10
       bg-gradient-to-r from-yellow-200 to-yellow-400
       backdrop-blur-md 
       shadow-sm 
