@@ -5,7 +5,7 @@ BruinSquads is a web application that connects UCLA students for sports activiti
 ## Prerequisites
 
 Before you begin, ensure you have the following:
-- Node.js (v14 or higher)
+- Node.js (v20 or higher)
 - npm (Node Package Manager)
 - MongoDB account
 - Clerk account
