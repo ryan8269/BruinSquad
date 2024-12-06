@@ -65,7 +65,7 @@ export default function ActivityLocationsLayout() {
                     {locations.map((location) => (
                         <div
                             key={location._id}
-                            className="bg-white backdrop-blur-lg bg-opacity-80 rounded-xl shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden"
+                            className="bg-white backdrop-blur-lg bg-opacity-80 rounded-xl shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden animate-slideLeftAndFade"
                         >
                             <img
                                 src={location.image}
