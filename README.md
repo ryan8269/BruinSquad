@@ -25,7 +25,7 @@ bruinsquads/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/ryan8269/bruinsquads.git
+git clone https://github.com/ryan8269/BruinSquad.git
 cd bruinsquads
 ```
 
