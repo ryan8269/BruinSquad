@@ -50,7 +50,7 @@ export default function ActivityLocationsLayout() {
 
     return (
         <div className="p-8 bg-gray-50 min-h-screen rounded-xl shadow-lg">
-            <h1 className="pb-4 text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 text-center mb-8">
+            <h1 className="pb-4 text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-800 text-center mb-8">
                 Explore Locations
             </h1>
 
@@ -65,7 +65,7 @@ export default function ActivityLocationsLayout() {
                     {locations.map((location) => (
                         <div
                             key={location._id}
-                            className="bg-white backdrop-blur-lg bg-opacity-80 rounded-xl shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden"
+                            className="bg-white backdrop-blur-lg bg-opacity-80 rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 animate-slideLeftAndFade"
                         >
                             <img
                                 src={location.image}
