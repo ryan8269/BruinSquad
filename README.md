@@ -127,7 +127,7 @@ npm run dev
 
 4. Access the application:
    - Frontend: [http://localhost:3000](http://localhost:3000)
-   - Backend API: [http://localhost:8000](http://localhost:8000)
+   - Backend API: [http://localhost:4000](http://localhost:4000)
    - Webhook endpoint will be available at your ngrok domain
 
 ## Webhook Configuration
